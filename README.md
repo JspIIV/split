@@ -143,3 +143,24 @@ reputation stacked on top of declared identity.
 It is also the strongest argument for `contracts/attest.py`. A validator set is
 many independent vantages at once, on machines nobody here controls. When they
 agree, the finding no longer depends on where we happened to be sitting.
+
+## The notice nobody gives
+
+robots.txt is the channel a site already has for telling machines no. Public,
+machine readable, free to read before knocking, and the thing the entire agent
+ecosystem is built on obeying.
+
+On the 230 site run of 2026-08-30, of the **32 sites that refused an agent, 32
+announced nothing there.** No exception. In the other direction, four sites
+(amazon.com, instacart.com, linkedin.com, ziprecruiter.com) bar agents in
+robots.txt and serve them anyway, so a careful client that reads the notice and
+obeys it keeps itself out of a site that would have let it in.
+
+Exactly one site in 230 was consistent: tripadvisor.com bars GPTBot and refuses
+GPTBot. For the identities that carry a waiting person, not one site did both.
+
+So the two channels are not merely unaligned, they point opposite ways, and the
+well behaved agent loses at both ends: turned away where no notice was given,
+and staying out where the door was open. Any standard built on agents declaring
+themselves and respecting published policy has to reckon with that, because
+right now neither half of the bargain is being kept on the other side.

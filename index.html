@@ -79,6 +79,17 @@
     <tbody id="rows"></tbody>
   </table></div>
 
+  <h2>The notice nobody gives</h2>
+  <p>robots.txt is the channel a site already has for telling machines no. It is
+  public, machine readable, and free to read before knocking, and the entire
+  agent ecosystem is built on obeying it.</p>
+  <p>On this run, <strong>every single site that refused an agent did so without
+  announcing it there.</strong> Not one exception. Meanwhile a handful bar agents
+  in robots.txt and serve them anyway, so the client that reads the notice and
+  obeys it stays out of a site that would have let it in.</p>
+  <p>The two channels are not merely unaligned. They point opposite ways, and the
+  agent that behaves well is the one that loses either way.</p>
+
   <h2>How it is measured</h2>
   <p>One homepage per site, fetched once per identity from the same machine within
   seconds of itself. Exactly one thing changes between fetches: who the client
@@ -146,7 +157,9 @@ function render() {
     ['<b>' + share + "%</b><span>of them do not give an agent what they give you</span>", "shut"],
     ['<b>' + t.refuses_agents + "</b><span>refuse an agent outright</span>", ""],
     ['<b>' + t.serves_agents_differently + "</b><span>let it in and hand it a different page</span>", ""],
-    ['<b>' + t.robots_bars_named_agents + "</b><span>bar named agents in robots.txt</span>", ""]
+    ['<b>' + t.refuses_without_notice + " of " + t.refuses_agents +
+     "</b><span>refuse an agent without saying so in robots.txt</span>", "shut"],
+    ['<b>' + t.said_no_but_serves + "</b><span>bar an agent in robots.txt and serve it anyway</span>", ""]
   ].map(([html, cls]) => '<div class="stat ' + cls + '">' + html + "</div>").join("");
 
   document.getElementById("head").innerHTML =

@@ -191,6 +191,43 @@ def verdict(record):
         elif control["bytes"] and abs(result["bytes"] - control["bytes"]) / control["bytes"] > DIFFERENCE:
             differs.append(name)
 
+    # robots.txt is the channel a site already has for telling machines no, and
+    # it is public, machine readable, and free to read before knocking. So the
+    # interesting question is not only whether a site refuses an agent, but
+    # whether it said so first.
+    #
+    # Two mismatches, and they are not the same kind of thing:
+    #
+    #   said_no_but_serves   the notice bars the agent and the door opens anyway.
+    #                        Untidy, and it costs the agent nothing: a careful
+    #                        client that obeyed the notice stayed out of a site
+    #                        that would have let it in.
+    #
+    #   refuses_without_notice  the notice says nothing and the door is shut.
+    #                        This one has a cost. There was no way to know before
+    #                        knocking, so the refusal cannot be respected in
+    #                        advance, only discovered by being turned away.
+    barred = [name.lower() for name in record["robots"]["blocked"]]
+    declared_names = {"chatgpt_user": "chatgpt-user", "claude_user": "claude-user",
+                      "perplexity_user": "perplexity-user", "gptbot": "gptbot"}
+    served_though_barred, refused_unannounced = [], []
+    for name, robots_name in declared_names.items():
+        result = record["identities"].get(name)
+        if not result:
+            continue
+        allowed_in = 200 <= result["status"] < 400
+        announced = robots_name in barred
+        if announced and allowed_in:
+            served_though_barred.append(name)
+        elif not announced and not allowed_in:
+            refused_unannounced.append(name)
+
+    notice = {
+        "barred_in_robots": record["robots"]["blocked"],
+        "said_no_but_serves": served_though_barred,
+        "refuses_without_notice": refused_unannounced,
+    }
+
     if refused:
         outcome = "refuses_agents"
     elif differs:
@@ -198,7 +235,7 @@ def verdict(record):
     else:
         outcome = "same_for_both"
     return {"verdict": outcome, "control_status": control["status"],
-            "refused": refused, "differs": differs}
+            "refused": refused, "differs": differs, "notice": notice}
 
 
 def load(limit=None):
@@ -236,6 +273,8 @@ def main():
     refusing = [r for r in comparable if r["verdict"] == "refuses_agents"]
     differing = [r for r in comparable if r["verdict"] == "serves_agents_differently"]
     barring = [r for r in records if r["robots"]["blocked"]]
+    unannounced = [r for r in comparable if r.get("notice", {}).get("refuses_without_notice")]
+    contradicting = [r for r in comparable if r.get("notice", {}).get("said_no_but_serves")]
 
     payload = {
         "measured_at": started.isoformat(),
@@ -253,6 +292,8 @@ def main():
             "refuses_agents": len(refusing),
             "serves_agents_differently": len(differing),
             "robots_bars_named_agents": len(barring),
+            "refuses_without_notice": len(unannounced),
+            "said_no_but_serves": len(contradicting),
         },
         "sites": records,
     }
@@ -268,6 +309,8 @@ def main():
         print("%d of them refuse at least one agent identity (%.0f%%)" % (len(refusing), share))
     print("%d serve agents a materially different page" % len(differing))
     print("%d bar named agent clients in robots.txt" % len(barring))
+    print("%d refuse an agent without saying so in robots.txt" % len(unannounced))
+    print("%d bar an agent in robots.txt and serve it anyway" % len(contradicting))
     print("\nwrote %s" % path)
     index()
     return 0
