@@ -1,0 +1,37 @@
+# One run a day, from a machine nobody here controls.
+#
+# The vantage is labelled rather than hidden: this runs from a datacentre
+# address, and a site that filters on address reputation may treat it
+# differently from a home connection. Runs from different places are kept apart
+# in the record instead of being averaged into one number that would be true of
+# neither.
+name: daily measurement
+
+on:
+  schedule:
+    - cron: "17 6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  measure:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: measure
+        env:
+          SPLIT_VANTAGE: github
+        run: python measure.py
+      - name: publish the run
+        run: |
+          git config user.name "split measurement"
+          git config user.email "noreply@github.com"
+          git add results/
+          git diff --cached --quiet && echo "nothing changed" && exit 0
+          git commit -m "Measurement from $(date -u +%Y-%m-%d), datacentre vantage"
+          git push
