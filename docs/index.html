@@ -130,11 +130,14 @@ function cell(result) {
 
 function render() {
   const t = DATA.totals;
-  const share = t.comparable ? Math.round(100 * t.refuses_agents / t.comparable) : 0;
+  const treated = t.refuses_agents + t.serves_agents_differently;
+  const share = t.comparable ? Math.round(100 * treated / t.comparable) : 0;
   document.getElementById("stats").innerHTML = [
-    ['<b>' + t.sites + "</b><span>sites measured</span>", ""],
-    ['<b>' + t.comparable + "</b><span>served the control, so comparable</span>", ""],
-    ['<b>' + share + "%</b><span>of those refused an agent</span>", "shut"],
+    ['<b>' + t.comparable + "</b><span>sites served our control, out of " +
+     t.sites + " measured</span>", ""],
+    ['<b>' + share + "%</b><span>of them do not give an agent what they give you</span>", "shut"],
+    ['<b>' + t.refuses_agents + "</b><span>refuse an agent outright</span>", ""],
+    ['<b>' + t.serves_agents_differently + "</b><span>let it in and hand it a different page</span>", ""],
     ['<b>' + t.robots_bars_named_agents + "</b><span>bar named agents in robots.txt</span>", ""]
   ].map(([html, cls]) => '<div class="stat ' + cls + '">' + html + "</div>").join("");
 
