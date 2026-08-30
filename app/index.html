@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Split: what the web serves you, and what it serves your agent</title>
+<style>
+  :root {
+    --bg: #0b0d10; --panel: #12161b; --line: #1f2630;
+    --text: #e6edf3; --dim: #8b949e; --faint: #6e7681;
+    --open: #3fb950; --shut: #f85149; --warn: #d29922;
+    --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font: 16px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  }
+  .wrap { max-width: 980px; margin: 0 auto; padding: 56px 20px 96px; }
+  h1 { font-size: clamp(28px, 5vw, 44px); line-height: 1.15; margin: 0 0 14px; letter-spacing: -0.02em; }
+  .sub { color: var(--dim); font-size: 18px; margin: 0 0 40px; max-width: 62ch; }
+  h2 { font-size: 15px; text-transform: uppercase; letter-spacing: 0.12em;
+       color: var(--faint); margin: 48px 0 16px; font-weight: 600; }
+
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; }
+  .stat { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 18px 20px; }
+  .stat b { display: block; font: 600 34px/1.1 var(--mono); letter-spacing: -0.02em; }
+  .stat span { color: var(--dim); font-size: 14px; }
+  .stat.shut b { color: var(--shut); }
+
+  table { width: 100%; border-collapse: collapse; font-family: var(--mono); font-size: 14px; }
+  .scroll { overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; background: var(--panel); }
+  th, td { padding: 10px 14px; text-align: left; white-space: nowrap; }
+  th { color: var(--faint); font-weight: 600; font-size: 12px; text-transform: uppercase;
+       letter-spacing: 0.08em; border-bottom: 1px solid var(--line); }
+  tbody tr + tr td { border-top: 1px solid var(--line); }
+  td.host { font-weight: 600; }
+  .code { font-weight: 600; }
+  .ok { color: var(--open); } .no { color: var(--shut); } .na { color: var(--faint); }
+  .tag { font-size: 12px; color: var(--dim); }
+
+  .note { background: var(--panel); border: 1px solid var(--line); border-left: 3px solid var(--warn);
+          border-radius: 8px; padding: 18px 22px; color: var(--dim); font-size: 15px; }
+  .note strong { color: var(--text); }
+  p { max-width: 68ch; }
+  code { font-family: var(--mono); font-size: 0.92em; color: var(--text); }
+  footer { margin-top: 64px; padding-top: 24px; border-top: 1px solid var(--line);
+           color: var(--faint); font-size: 14px; }
+  a { color: #58a6ff; }
+  .controls { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; }
+  button { background: var(--panel); color: var(--dim); border: 1px solid var(--line);
+           border-radius: 999px; padding: 7px 15px; font-size: 13px; cursor: pointer; font-family: inherit; }
+  button[aria-pressed="true"] { color: var(--text); border-color: var(--faint); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>The web has started serving two internets.</h1>
+  <p class="sub">One to you, and one to the agent you sent. This is a record of the
+  difference, measured the same way every time, published whether or not the
+  numbers are interesting.</p>
+
+  <div class="stats" id="stats"></div>
+
+  <h2>What each site did</h2>
+  <div class="controls">
+    <button data-filter="all" aria-pressed="true">All</button>
+    <button data-filter="refuses_agents" aria-pressed="false">Refused an agent</button>
+    <button data-filter="serves_agents_differently" aria-pressed="false">Different page</button>
+    <button data-filter="same_for_both" aria-pressed="false">No difference</button>
+    <button data-filter="not_comparable" aria-pressed="false">Not comparable</button>
+  </div>
+  <div class="scroll"><table>
+    <thead><tr id="head"></tr></thead>
+    <tbody id="rows"></tbody>
+  </table></div>
+
+  <h2>How it is measured</h2>
+  <p>One homepage per site, fetched once per identity from the same machine within
+  seconds of itself. Exactly one thing changes between fetches: who the client
+  says it is. Everything else is held still, because everything else is what
+  would otherwise explain the difference.</p>
+  <p>Nothing is bypassed. No login, no CAPTCHA solving, no proxy rotation, and no
+  pretending to be a browser we are not. When a site refuses a client, the
+  refusal is the measurement.</p>
+
+  <h2>What this does not show</h2>
+  <div class="note">
+    <p><strong>The control is not a real browser.</strong> It is a command line
+    client sending a browser user agent string. It runs no JavaScript and carries
+    no browser TLS fingerprint, so a site that refuses it is refusing non browser
+    clients in general. That is a different claim from refusing agents, so those
+    sites are marked <code>not comparable</code> and dropped from the
+    denominator rather than counted against anyone.</p>
+    <p style="margin-bottom:0"><strong>This measures the front door, not the
+    price.</strong> One homepage, one location, one moment. It says whether an
+    agent is let in and whether it is handed the same page. It does not say what
+    an agent is charged, and no number here should be read that way.</p>
+  </div>
+
+  <footer>
+    <span id="stamp"></span> ·
+    <a href="https://github.com/JspIIV/split">Source and every dataset</a> ·
+    Run it yourself: <code>python measure.py</code>
+  </footer>
+</div>
+
+<script>
+const IDS = ["browser", "chatgpt_user", "claude_user", "perplexity_user", "gptbot", "script"];
+const LABEL = {
+  browser: "browser", chatgpt_user: "ChatGPT-User", claude_user: "Claude-User",
+  perplexity_user: "Perplexity-User", gptbot: "GPTBot", script: "script"
+};
+const VERDICT = {
+  refuses_agents: "refused an agent",
+  serves_agents_differently: "different page",
+  same_for_both: "no difference",
+  not_comparable: "not comparable"
+};
+
+let DATA = null, FILTER = "all";
+
+function cell(result) {
+  if (!result) return '<span class="na">-</span>';
+  const s = result.status;
+  const cls = s === 0 ? "no" : (s >= 200 && s < 400) ? "ok" : "no";
+  return '<span class="code ' + cls + '">' + (s === 0 ? "dropped" : s) + "</span>";
+}
+
+function render() {
+  const t = DATA.totals;
+  const share = t.comparable ? Math.round(100 * t.refuses_agents / t.comparable) : 0;
+  document.getElementById("stats").innerHTML = [
+    ['<b>' + t.sites + "</b><span>sites measured</span>", ""],
+    ['<b>' + t.comparable + "</b><span>served the control, so comparable</span>", ""],
+    ['<b>' + share + "%</b><span>of those refused an agent</span>", "shut"],
+    ['<b>' + t.robots_bars_named_agents + "</b><span>bar named agents in robots.txt</span>", ""]
+  ].map(([html, cls]) => '<div class="stat ' + cls + '">' + html + "</div>").join("");
+
+  document.getElementById("head").innerHTML =
+    "<th>site</th>" + IDS.map(i => "<th>" + LABEL[i] + "</th>").join("") +
+    "<th>verdict</th><th>robots.txt</th>";
+
+  const rows = DATA.sites.filter(s => FILTER === "all" || s.verdict === FILTER);
+  document.getElementById("rows").innerHTML = rows.map(site =>
+    "<tr><td class='host'>" + site.host + "</td>" +
+    IDS.map(i => "<td>" + cell(site.identities[i]) + "</td>").join("") +
+    "<td class='tag'>" + (VERDICT[site.verdict] || site.verdict) + "</td>" +
+    "<td class='tag'>" + (site.robots.blocked.length ? site.robots.blocked.join(", ") : "-") +
+    "</td></tr>").join("") ||
+    "<tr><td colspan='9' class='tag'>nothing in this group</td></tr>";
+
+  document.getElementById("stamp").textContent =
+    "Measured " + new Date(DATA.measured_at).toISOString().slice(0, 16).replace("T", " ") + " UTC";
+}
+
+document.querySelectorAll("button[data-filter]").forEach(button => {
+  button.addEventListener("click", () => {
+    FILTER = button.dataset.filter;
+    document.querySelectorAll("button[data-filter]").forEach(other =>
+      other.setAttribute("aria-pressed", String(other === button)));
+    render();
+  });
+});
+
+fetch("./data.json")
+  .then(response => response.json())
+  .then(payload => { DATA = payload; render(); })
+  .catch(() => {
+    document.getElementById("stats").innerHTML =
+      '<div class="stat"><span>No dataset loaded. Run <code>python measure.py</code>, ' +
+      'then copy the newest file from results/ to app/data.json.</span></div>';
+  });
+</script>
+</body>
+</html>

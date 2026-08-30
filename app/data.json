@@ -1,0 +1,3493 @@
+{
+  "measured_at": "2026-08-30T08:12:39.006656+00:00",
+  "finished_at": "2026-08-30T08:17:00.838042+00:00",
+  "method": "One homepage per site, fetched once per identity from the same machine within seconds, changing only the client identity. Nothing bypassed, nothing logged in. Sites that refuse the browser control are marked not_comparable and left out of the denominator, because refusing every non browser client is a different thing from refusing agents.",
+  "identities": {
+    "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0 Safari/537.36",
+    "chatgpt_user": "Mozilla/5.0 AppleWebKit/537.36 (KHTML, like Gecko); compatible; ChatGPT-User/1.0; +https://openai.com/bot",
+    "claude_user": "Mozilla/5.0 AppleWebKit/537.36 (KHTML, like Gecko); compatible; Claude-User/1.0; +https://anthropic.com/claude-user",
+    "perplexity_user": "Mozilla/5.0 AppleWebKit/537.36 (KHTML, like Gecko); compatible; Perplexity-User/1.0; +https://perplexity.ai/perplexity-user",
+    "gptbot": "Mozilla/5.0 AppleWebKit/537.36 (compatible; GPTBot/1.1; +https://openai.com/gptbot)",
+    "script": "python-requests/2.32.3"
+  },
+  "totals": {
+    "sites": 72,
+    "comparable": 39,
+    "refuses_agents": 16,
+    "serves_agents_differently": 7,
+    "robots_bars_named_agents": 7
+  },
+  "sites": [
+    {
+      "host": "aa.com",
+      "category": "travel",
+      "url": "https://www.aa.com/",
+      "identities": {
+        "browser": {
+          "status": 403,
+          "bytes": 362,
+          "final": "https://www.aa.com/"
+        },
+        "chatgpt_user": {
+          "status": 403,
+          "bytes": 362,
+          "final": "https://www.aa.com/"
+        },
+        "claude_user": {
+          "status": 403,
+          "bytes": 362,
+          "final": "https://www.aa.com/"
+        },
+        "perplexity_user": {
+          "status": 403,
+          "bytes": 362,
+          "final": "https://www.aa.com/"
+        },
+        "gptbot": {
+          "status": 403,
+          "bytes": 362,
+          "final": "https://www.aa.com/"
+        },
+        "script": {
+          "status": 403,
+          "bytes": 362,
+          "final": "https://www.aa.com/"
+        }
+      },
+      "robots": {
+        "error": null,
+        "blocked": []
+      },
+      "verdict": "not_comparable",
+      "control_status": 403
+    },
+    {
+      "host": "adidas.com",
+      "category": "apparel",
+      "url": "https://www.adidas.com/",
+      "identities": {
+        "browser": {
+          "status": 403,
+          "bytes": 3368,
+          "final": "https://www.adidas.com/"
+        },
+        "chatgpt_user": {
+          "status": 403,
+          "bytes": 3368,
+          "final": "https://www.adidas.com/"
+        },
+        "claude_user": {
+          "status": 403,
+          "bytes": 3368,
+          "final": "https://www.adidas.com/"
+        },
+        "perplexity_user": {
+          "status": 403,
+          "bytes": 3368,
+          "final": "https://www.adidas.com/"
+        },
+        "gptbot": {
+          "status": 403,
+          "bytes": 3368,
+          "final": "https://www.adidas.com/"
+        },
+        "script": {
+          "status": 403,
+          "bytes": 3368,
+          "final": "https://www.adidas.com/"
+        }
+      },
+      "robots": {
+        "error": null,
+        "blocked": []
+      },
+      "verdict": "not_comparable",
+      "control_status": 403
+    },
+    {
+      "host": "airbnb.com",
+      "category": "travel",
+      "url": "https://www.airbnb.com/",
+      "identities": {
+        "browser": {
+          "status": 200,
+          "bytes": 606982,
+          "final": "https://www.airbnb.com/"
+        },
+        "chatgpt_user": {
+          "status": 403,
+          "bytes": 364,
+          "final": "https://www.airbnb.com/"
+        },
+        "claude_user": {
+          "status": 403,
+          "bytes": 368,
+          "final": "https://www.airbnb.com/"
+        },
+        "perplexity_user": {
+          "status": 403,
+          "bytes": 368,
+          "final": "https://www.airbnb.com/"
+        },
+        "gptbot": {
+          "status": 403,
+          "bytes": 364,
+          "final": "https://www.airbnb.com/"
+        },
+        "script": {
+          "status": 200,
+          "bytes": 655945,
+          "final": "https://www.airbnb.com/"
+        }
+      },
+      "robots": {
+        "error": null,
+        "blocked": []
+      },
+      "verdict": "refuses_agents",
+      "control_status": 200,
+      "refused": [
+        "chatgpt_user",
+        "claude_user",
+        "perplexity_user",
+        "gptbot"
+      ],
+      "differs": []
+    },
+    {
+      "host": "amazon.com",
+      "category": "retail",
+      "url": "https://www.amazon.com/",
+      "identities": {
+        "browser": {
+          "status": 202,
+          "bytes": 2010,
+          "final": "https://www.amazon.com/"
+        },
+        "chatgpt_user": {
+          "status": 202,
+          "bytes": 2010,
+          "final": "https://www.amazon.com/"
+        },
+        "claude_user": {
+          "status": 202,
+          "bytes": 2010,
+          "final": "https://www.amazon.com/"
+        },
+        "perplexity_user": {
+          "status": 202,
+          "bytes": 2010,
+          "final": "https://www.amazon.com/"
+        },
+        "gptbot": {
+          "status": 202,
+          "bytes": 2010,
+          "final": "https://www.amazon.com/"
+        },
+        "script": {
+          "status": 503,
+          "bytes": 2671,
+          "final": "https://www.amazon.com/"
+        }
+      },
+      "robots": {
+        "error": null,
+        "blocked": [
+          "GPTBot",
+          "CCBot",
+          "PerplexityBot",
+          "Google-Extended",
+          "ClaudeBot",
+          "meta-externalagent",
+          "Bytespider",
+          "Claude-User",
+          "Perplexity-User",
+          "ChatGPT-User"
+        ]
+      },
+      "verdict": "same_for_both",
+      "control_status": 202,
+      "refused": [],
+      "differs": []
+    },
+    {
+      "host": "angi.com",
+      "category": "services",
+      "url": "https://www.angi.com/",
+      "identities": {
+        "browser": {
+          "status": 403,
+          "bytes": 4544,
+          "final": "https://www.angi.com/"
+        },
+        "chatgpt_user": {
+          "status": 403,
+          "bytes": 4544,
+          "final": "https://www.angi.com/"
+        },
+        "claude_user": {
+          "status": 403,
+          "bytes": 4544,
+          "final": "https://www.angi.com/"
+        },
+        "perplexity_user": {
+          "status": 403,
+          "bytes": 4544,
+          "final": "https://www.angi.com/"
+        },
+        "gptbot": {
+          "status": 403,
+          "bytes": 4544,
+          "final": "https://www.angi.com/"
+        },
+        "script": {
+          "status": 403,
+          "bytes": 4544,
+          "final": "https://www.angi.com/"
+        }
+      },
+      "robots": {
+        "error": null,
+        "blocked": []
+      },
+      "verdict": "not_comparable",
+      "control_status": 403
+    },
+    {
+      "host": "apartments.com",
+      "category": "services",
+      "url": "https://www.apartments.com/",
+      "identities": {
+        "browser": {
+          "status": 403,
+          "bytes": 372,
+          "final": "https://www.apartments.com/"
+        },
+        "chatgpt_user": {
+          "status": 403,
+          "bytes": 372,
+          "final": "https://www.apartments.com/"
+        },
+        "claude_user": {
+          "status": 403,
+          "bytes": 372,
+          "final": "https://www.apartments.com/"
+        },
+        "perplexity_user": {
+          "status": 403,
+          "bytes": 372,
+          "final": "https://www.apartments.com/"
+        },
+        "gptbot": {
+          "status": 403,
+          "bytes": 372,
+          "final": "https://www.apartments.com/"
+        },
+        "script": {
+          "status": 403,
+          "bytes": 372,
+          "final": "https://www.apartments.com/"
+        }
+      },
+      "robots": {
+        "error": null,
+        "blocked": []
+      },
+      "verdict": "not_comparable",
+      "control_status": 403
+    },
+    {
+      "host": "asos.com",
+      "category": "apparel",
+      "url": "https://www.asos.com/",
+      "identities": {
+        "browser": {
+          "status": 0,
+          "bytes": 0,
+          "final": "https://www.asos.com/"
+        },
+        "chatgpt_user": {
+          "status": 0,
+          "bytes": 0,
+          "final": "https://www.asos.com/"
+        },
+        "claude_user": {
+          "status": 0,
+          "bytes": 0,
+          "final": "https://www.asos.com/"
+        },
+        "perplexity_user": {
+          "status": 0,
+          "bytes": 0,
+          "final": "https://www.asos.com/"
+        },
+        "gptbot": {
+          "status": 0,
+          "bytes": 0,
+          "final": "https://www.asos.com/"
+        },
+        "script": {
+          "status": 0,
+          "bytes": 0,
+          "final": "https://www.asos.com/"
+        }
+      },
+      "robots": {
+        "error": "empty",
+        "blocked": []
+      },
+      "verdict": "not_comparable",
+      "control_status": 0
+    },
+    {
+      "host": "autotrader.com",
+      "category": "services",
+      "url": "https://www.autotrader.com/",
+      "identities": {
+        "browser": {
+          "status": 200,
+          "bytes": 3761,
+          "final": "https://www.autotrader.com/"
+        },
+        "chatgpt_user": {
+          "status": 200,
+          "bytes": 3761,
+          "final": "https://www.autotrader.com/"
+        },
+        "claude_user": {
+          "status": 200,
+          "bytes": 3761,
+          "final": "https://www.autotrader.com/"
+        },
+        "perplexity_user": {
+          "status": 200,
+          "bytes": 3761,
+          "final": "https://www.autotrader.com/"
+        },
+        "gptbot": {
+          "status": 200,
+          "bytes": 3761,
+          "final": "https://www.autotrader.com/"
+        },
+        "script": {
+          "status": 200,
+          "bytes": 3761,
+          "final": "https://www.autotrader.com/"
+        }
+      },
+      "robots": {
+        "error": null,
+        "blocked": []
+      },
+      "verdict": "same_for_both",
+      "control_status": 200,
+      "refused": [],
+      "differs": []
+    },
+    {
+      "host": "bestbuy.com",
+      "category": "retail",
+      "url": "https://www.bestbuy.com/",
+      "identities": {
+        "browser": {
+          "status": 0,
+          "bytes": 0,
+          "final": "https://www.bestbuy.com/"
+        },
+        "chatgpt_user": {
+          "status": 0,
+          "bytes": 0,
+          "final": "https://www.bestbuy.com/"
+        },
+        "claude_user": {
+          "status": 0,
+          "bytes": 0,
+          "final": "https://www.bestbuy.com/"
+        },
+        "perplexity_user": {
+          "status": 0,
+          "bytes": 0,
+          "final": "https://www.bestbuy.com/"
+        },
+        "gptbot": {
+          "status": 0,
+          "bytes": 0,
+          "final": "https://www.bestbuy.com/"
+        },
+        "script": {
+          "status": 403,
+          "bytes": 369,
+          "final": "https://www.bestbuy.com/"
+        }
+      },
+      "robots": {
+        "error": "empty",
+        "blocked": []
+      },
+      "verdict": "not_comparable",
+      "control_status": 0
+    },
+    {
+      "host": "bhphotovideo.com",
+      "category": "retail",
+      "url": "https://www.bhphotovideo.com/",
+      "identities": {
+        "browser": {
+          "status": 200,
+          "bytes": 129941,
+          "final": "https://www.bhphotovideo.com/"
+        },
+        "chatgpt_user": {
+          "status": 403,
+          "bytes": 5645,
+          "final": "https://www.bhphotovideo.com/"
+        },
+        "claude_user": {
+          "status": 403,
+          "bytes": 5688,
+          "final": "https://www.bhphotovideo.com/"
+        },
+        "perplexity_user": {
+          "status": 403,
+          "bytes": 5666,
+          "final": "https://www.bhphotovideo.com/"
+        },
+        "gptbot": {
+          "status": 403,
+          "bytes": 5603,
+          "final": "https://www.bhphotovideo.com/"
+        },
+        "script": {
+          "status": 403,
+          "bytes": 5432,
+          "final": "https://www.bhphotovideo.com/"
+        }
+      },
+      "robots": {
+        "error": null,
+        "blocked": []
+      },
+      "verdict": "refuses_agents",
+      "control_status": 200,
+      "refused": [
+        "chatgpt_user",
+        "claude_user",
+        "perplexity_user",
+        "gptbot"
+      ],
+      "differs": []
+    },
+    {
+      "host": "booking.com",
+      "category": "travel",
+      "url": "https://www.booking.com/",
+      "identities": {
+        "browser": {
+          "status": 202,
+          "bytes": 3962,
+          "final": "https://www.booking.com/"
+        },
+        "chatgpt_user": {
+          "status": 202,
+          "bytes": 7033,
+          "final": "https://www.booking.com/"
+        },
+        "claude_user": {
+          "status": 202,
+          "bytes": 3962,
+          "final": "https://www.booking.com/"
+        },
+        "perplexity_user": {
+          "status": 202,
+          "bytes": 3962,
+          "final": "https://www.booking.com/"
+        },
+        "gptbot": {
+          "status": 200,
+          "bytes": 504020,
+          "final": "https://www.booking.com/"
+        },
+        "script": {
+          "status": 202,
+          "bytes": 3962,
+          "final": "https://www.booking.com/"
+        }
+      },
+      "robots": {
+        "error": null,
+        "blocked": []
+      },
+      "verdict": "serves_agents_differently",
+      "control_status": 202,
+      "refused": [],
+      "differs": [
+        "gptbot"
+      ],
+      "difference_recheck": {
+        "proposed": [
+          "chatgpt_user",
+          "gptbot"
+        ],
+        "held": [
+          "gptbot"
+        ],
+        "bytes": {
+          "browser": 3962,
+          "chatgpt_user": 3962,
+          "gptbot": 499219
+        }
+      }
+    },
+    {
+      "host": "cargurus.com",
+      "category": "services",
+      "url": "https://www.cargurus.com/",
+      "identities": {
+        "browser": {
+          "status": 406,
+          "bytes": 0,
+          "final": "https://www.cargurus.com/"
+        },
+        "chatgpt_user": {
+          "status": 406,
+          "bytes": 0,
+          "final": "https://www.cargurus.com/"
+        },
+        "claude_user": {
+          "status": 406,
+          "bytes": 0,
+          "final": "https://www.cargurus.com/"
+        },
+        "perplexity_user": {
+          "status": 406,
+          "bytes": 0,
+          "final": "https://www.cargurus.com/"
+        },
+        "gptbot": {
+          "status": 406,
+          "bytes": 0,
+          "final": "https://www.cargurus.com/"
+        },
+        "script": {
+          "status": 406,
+          "bytes": 0,
+          "final": "https://www.cargurus.com/"
+        }
+      },
+      "robots": {
+        "error": "empty",
+        "blocked": []
+      },
+      "verdict": "not_comparable",
+      "control_status": 406
+    },
+    {
+      "host": "carvana.com",
+      "category": "services",
+      "url": "https://www.carvana.com/",
+      "identities": {
+        "browser": {
+          "status": 403,
+          "bytes": 5485,
+          "final": "https://www.carvana.com/"
+        },
+        "chatgpt_user": {
+          "status": 403,
+          "bytes": 5485,
+          "final": "https://www.carvana.com/"
+        },
+        "claude_user": {
+          "status": 403,
+          "bytes": 5485,
+          "final": "https://www.carvana.com/"
+        },
+        "perplexity_user": {
+          "status": 403,
+          "bytes": 5485,
+          "final": "https://www.carvana.com/"
+        },
+        "gptbot": {
+          "status": 403,
+          "bytes": 5485,
+          "final": "https://www.carvana.com/"
+        },
+        "script": {
+          "status": 403,
+          "bytes": 5485,
+          "final": "https://www.carvana.com/"
+        }
+      },
+      "robots": {
+        "error": null,
+        "blocked": []
+      },
+      "verdict": "not_comparable",
+      "control_status": 403
+    },
+    {
+      "host": "chewy.com",
+      "category": "retail",
+      "url": "https://www.chewy.com/",
+      "identities": {
+        "browser": {
+          "status": 200,
+          "bytes": 1744817,
+          "final": "https://www.chewy.com/"
+        },
+        "chatgpt_user": {
+          "status": 200,
+          "bytes": 1744998,
+          "final": "https://www.chewy.com/"
+        },
+        "claude_user": {
+          "status": 200,
+          "bytes": 1745008,
+          "final": "https://www.chewy.com/"
+        },
+        "perplexity_user": {
+          "status": 200,
+          "bytes": 1744886,
+          "final": "https://www.chewy.com/"
+        },
+        "gptbot": {
+          "status": 200,
+          "bytes": 1744976,
+          "final": "https://www.chewy.com/"
+        },
+        "script": {
+          "status": 403,
+          "bytes": 65689,
+          "final": "https://www.chewy.com/"
+        }
+      },
+      "robots": {
+        "error": null,
+        "blocked": []
+      },
+      "verdict": "same_for_both",
+      "control_status": 200,
+      "refused": [],
+      "differs": []
+    },
+    {
+      "host": "costco.com",
+      "category": "retail",
+      "url": "https://www.costco.com/",
+      "identities": {
+        "browser": {
+          "status": 403,
+          "bytes": 368,
+          "final": "https://www.costco.com/"
+        },
+        "chatgpt_user": {
+          "status": 403,
+          "bytes": 368,
+          "final": "https://www.costco.com/"
+        },
+        "claude_user": {
+          "status": 403,
+          "bytes": 368,
+          "final": "https://www.costco.com/"
+        },
+        "perplexity_user": {
+          "status": 403,
+          "bytes": 368,
+          "final": "https://www.costco.com/"
+        },
+        "gptbot": {
+          "status": 403,
+          "bytes": 368,
+          "final": "https://www.costco.com/"
+        },
+        "script": {
+          "status": 403,
+          "bytes": 368,
+          "final": "https://www.costco.com/"
+        }
+      },
+      "robots": {
+        "error": null,
+        "blocked": []
+      },
+      "verdict": "not_comparable",
+      "control_status": 403
+    },
+    {
+      "host": "cvs.com",
+      "category": "pharmacy",
+      "url": "https://www.cvs.com/",
+      "identities": {
+        "browser": {
+          "status": 403,
+          "bytes": 16678,
+          "final": "https://www.cvs.com/"
+        },
+        "chatgpt_user": {
+          "status": 403,
+          "bytes": 16678,
+          "final": "https://www.cvs.com/"
+        },
+        "claude_user": {
+          "status": 403,
+          "bytes": 16678,
+          "final": "https://www.cvs.com/"
+        },
+        "perplexity_user": {
+          "status": 403,
+          "bytes": 16678,
+          "final": "https://www.cvs.com/"
+        },
+        "gptbot": {
+          "status": 403,
+          "bytes": 16678,
+          "final": "https://www.cvs.com/"
+        },
+        "script": {
+          "status": 403,
+          "bytes": 16678,
+          "final": "https://www.cvs.com/"
+        }
+      },
+      "robots": {
+        "error": null,
+        "blocked": []
+      },
+      "verdict": "not_comparable",
+      "control_status": 403
+    },
+    {
+      "host": "delta.com",
+      "category": "travel",
+      "url": "https://www.delta.com/",
+      "identities": {
+        "browser": {
+          "status": 200,
+          "bytes": 8281,
+          "final": "https://www.delta.com/"
+        },
+        "chatgpt_user": {
+          "status": 200,
+          "bytes": 8282,
+          "final": "https://www.delta.com/"
+        },
+        "claude_user": {
+          "status": 200,
+          "bytes": 8282,
+          "final": "https://www.delta.com/"
+        },
+        "perplexity_user": {
+          "status": 200,
+          "bytes": 8282,
+          "final": "https://www.delta.com/"
+        },
+        "gptbot": {
+          "status": 200,
+          "bytes": 8282,
+          "final": "https://www.delta.com/"
+        },
+        "script": {
+          "status": 444,
+          "bytes": 189,
+          "final": "https://www.delta.com/"
+        }
+      },
+      "robots": {
+        "error": null,
+        "blocked": []
+      },
+      "verdict": "same_for_both",
+      "control_status": 200,
+      "refused": [],
+      "differs": []
+    },
+    {
+      "host": "doordash.com",
+      "category": "delivery",
+      "url": "https://www.doordash.com/",
+      "identities": {
+        "browser": {
+          "status": 403,
+          "bytes": 5641,
+          "final": "https://www.doordash.com/"
+        },
+        "chatgpt_user": {
+          "status": 403,
+          "bytes": 278923,
+          "final": "https://www.doordash.com/"
+        },
+        "claude_user": {
+          "status": 403,
+          "bytes": 278923,
+          "final": "https://www.doordash.com/"
+        },
+        "perplexity_user": {
+          "status": 403,
+          "bytes": 278923,
+          "final": "https://www.doordash.com/"
+        },
+        "gptbot": {
+          "status": 403,
+          "bytes": 278923,
+          "final": "https://www.doordash.com/"
+        },
+        "script": {
+          "status": 403,
+          "bytes": 278923,
+          "final": "https://www.doordash.com/"
+        }
+      },
+      "robots": {
+        "error": null,
+        "blocked": []
+      },
+      "verdict": "not_comparable",
+      "control_status": 403
+    },
+    {
+      "host": "ebay.com",
+      "category": "retail",
+      "url": "https://www.ebay.com/",
+      "identities": {
+        "browser": {
+          "status": 403,
+          "bytes": 1832,
+          "final": "https://www.ebay.com/"
+        },
+        "chatgpt_user": {
+          "status": 0,
+          "bytes": 0,
+          "final": "https://www.ebay.com/"
+        },
+        "claude_user": {
+          "status": 0,
+          "bytes": 0,
+          "final": "https://www.ebay.com/"
+        },
+        "perplexity_user": {
+          "status": 0,
+          "bytes": 0,
+          "final": "https://www.ebay.com/"
+        },
+        "gptbot": {
+          "status": 0,
+          "bytes": 0,
+          "final": "https://www.ebay.com/"
+        },
+        "script": {
+          "status": 403,
+          "bytes": 1831,
+          "final": "https://www.ebay.com/"
+        }
+      },
+      "robots": {
+        "error": null,
+        "blocked": [
+          "GPTBot",
+          "ClaudeBot",
+          "anthropic-ai",
+          "PerplexityBot",
+          "CCBot",
+          "Applebot-Extended",
+          "Bytespider",
+          "meta-externalagent"
+        ]
+      },
+      "verdict": "not_comparable",
+      "control_status": 403
+    },
+    {
+      "host": "etsy.com",
+      "category": "retail",
+      "url": "https://www.etsy.com/",
+      "identities": {
+        "browser": {
+          "status": 403,
+          "bytes": 776,
+          "final": "https://www.etsy.com/"
+        },
+        "chatgpt_user": {
+          "status": 403,
+          "bytes": 776,
+          "final": "https://www.etsy.com/"
+        },
+        "claude_user": {
+          "status": 403,
+          "bytes": 776,
+          "final": "https://www.etsy.com/"
+        },
+        "perplexity_user": {
+          "status": 403,
+          "bytes": 776,
+          "final": "https://www.etsy.com/"
+        },
+        "gptbot": {
+          "status": 403,
+          "bytes": 776,
+          "final": "https://www.etsy.com/"
+        },
+        "script": {
+          "status": 403,
+          "bytes": 776,
+          "final": "https://www.etsy.com/"
+        }
+      },
+      "robots": {
+        "error": null,
+        "blocked": []
+      },
+      "verdict": "not_comparable",
+      "control_status": 403
+    },
+    {
+      "host": "eventbrite.com",
+      "category": "tickets",
+      "url": "https://www.eventbrite.com/",
+      "identities": {
+        "browser": {
+          "status": 200,
+          "bytes": 240628,
+          "final": "https://www.eventbrite.com/"
+        },
+        "chatgpt_user": {
+          "status": 429,
+          "bytes": 2010,
+          "final": "https://www.eventbrite.com/"
+        },
+        "claude_user": {
+          "status": 200,
+          "bytes": 240628,
+          "final": "https://www.eventbrite.com/"
+        },
+        "perplexity_user": {
+          "status": 200,
+          "bytes": 240628,
+          "final": "https://www.eventbrite.com/"
+        },
+        "gptbot": {
+          "status": 200,
+          "bytes": 240628,
+          "final": "https://www.eventbrite.com/"
+        },
+        "script": {
+          "status": 200,
+          "bytes": 240628,
+          "final": "https://www.eventbrite.com/"
+        }
+      },
+      "robots": {
+        "error": null,
+        "blocked": []
+      },
+      "verdict": "refuses_agents",
+      "control_status": 200,
+      "refused": [
+        "chatgpt_user"
+      ],
+      "differs": []
+    },
+    {
+      "host": "expedia.com",
+      "category": "travel",
+      "url": "https://www.expedia.com/",
+      "identities": {
+        "browser": {
+          "status": 429,
+          "bytes": 27387,
+          "final": "https://www.expedia.com/"
+        },
+        "chatgpt_user": {
+          "status": 429,
+          "bytes": 134408,
+          "final": "https://www.expedia.com/"
+        },
+        "claude_user": {
+          "status": 429,
+          "bytes": 134410,
+          "final": "https://www.expedia.com/"
+        },
+        "perplexity_user": {
+          "status": 429,
+          "bytes": 134392,
+          "final": "https://www.expedia.com/"
+        },
+        "gptbot": {
+          "status": 429,
+          "bytes": 134379,
+          "final": "https://www.expedia.com/"
+        },
+        "script": {
+          "status": 429,
+          "bytes": 134315,
+          "final": "https://www.expedia.com/"
+        }
+      },
+      "robots": {
+        "error": null,
+        "blocked": []
+      },
+      "verdict": "not_comparable",
+      "control_status": 429
+    },
+    {
+      "host": "gap.com",
+      "category": "retail",
+      "url": "https://www.gap.com/",
+      "identities": {
+        "browser": {
+          "status": 200,
+          "bytes": 16480,
+          "final": "https://www.gap.com/Asset_Archive/AllBrands/franchiseLandingPages/gap/franchiseLanding-gap-tr.html"
+        },
+        "chatgpt_user": {
+          "status": 200,
+          "bytes": 6661,
+          "final": "https://www.gap.com/Asset_Archive/AllBrands/franchiseLandingPages/gap/franchiseLanding-gap-tr.html"
+        },
+        "claude_user": {
+          "status": 200,
+          "bytes": 12264,
+          "final": "https://www.gap.com/Asset_Archive/AllBrands/franchiseLandingPages/gap/franchiseLanding-gap-tr.html"
+        },
+        "perplexity_user": {
+          "status": 200,
+          "bytes": 12264,
+          "final": "https://www.gap.com/Asset_Archive/AllBrands/franchiseLandingPages/gap/franchiseLanding-gap-tr.html"
+        },
+        "gptbot": {
+          "status": 200,
+          "bytes": 6661,
+          "final": "https://www.gap.com/Asset_Archive/AllBrands/franchiseLandingPages/gap/franchiseLanding-gap-tr.html"
+        },
+        "script": {
+          "status": 200,
+          "bytes": 12274,
+          "final": "https://www.gap.com/Asset_Archive/AllBrands/franchiseLandingPages/gap/franchiseLanding-gap-tr.html"
+        }
+      },
+      "robots": {
+        "error": null,
+        "blocked": []
+      },
+      "verdict": "serves_agents_differently",
+      "control_status": 200,
+      "refused": [],
+      "differs": [
+        "chatgpt_user",
+        "claude_user",
+        "perplexity_user",
+        "gptbot"
+      ],
+      "difference_recheck": {
+        "proposed": [
+          "chatgpt_user",
+          "claude_user",
+          "perplexity_user",
+          "gptbot"
+        ],
+        "held": [
+          "chatgpt_user",
+          "claude_user",
+          "perplexity_user",
+          "gptbot"
+        ],
+        "bytes": {
+          "browser": 16481,
+          "chatgpt_user": 6661,
+          "claude_user": 12264,
+          "perplexity_user": 12264,
+          "gptbot": 6661
+        }
+      }
+    },
+    {
+      "host": "goodrx.com",
+      "category": "pharmacy",
+      "url": "https://www.goodrx.com/",
+      "identities": {
+        "browser": {
+          "status": 200,
+          "bytes": 1783949,
+          "final": "https://www.goodrx.com/"
+        },
+        "chatgpt_user": {
+          "status": 403,
+          "bytes": 5533,
+          "final": "https://www.goodrx.com/"
+        },
+        "claude_user": {
+          "status": 403,
+          "bytes": 5533,
+          "final": "https://www.goodrx.com/"
+        },
+        "perplexity_user": {
+          "status": 403,
+          "bytes": 5533,
+          "final": "https://www.goodrx.com/"
+        },
+        "gptbot": {
+          "status": 403,
+          "bytes": 5533,
+          "final": "https://www.goodrx.com/"
+        },
+        "script": {
+          "status": 403,
+          "bytes": 5533,
+          "final": "https://www.goodrx.com/"
+        }
+      },
+      "robots": {
+        "error": null,
+        "blocked": []
+      },
+      "verdict": "refuses_agents",
+      "control_status": 200,
+      "refused": [
+        "chatgpt_user",
+        "claude_user",
+        "perplexity_user",
+        "gptbot"
+      ],
+      "differs": []
+    },
+    {
+      "host": "grubhub.com",
+      "category": "delivery",
+      "url": "https://www.grubhub.com/",
+      "identities": {
+        "browser": {
+          "status": 200,
+          "bytes": 2852,
+          "final": "https://www.grubhub.com/"
+        },
+        "chatgpt_user": {
+          "status": 200,
+          "bytes": 2852,
+          "final": "https://www.grubhub.com/"
+        },
+        "claude_user": {
+          "status": 200,
+          "bytes": 2852,
+          "final": "https://www.grubhub.com/"
+        },
+        "perplexity_user": {
+          "status": 200,
+          "bytes": 2852,
+          "final": "https://www.grubhub.com/"
+        },
+        "gptbot": {
+          "status": 200,
+          "bytes": 2852,
+          "final": "https://www.grubhub.com/"
+        },
+        "script": {
+          "status": 200,
+          "bytes": 2852,
+          "final": "https://www.grubhub.com/"
+        }
+      },
+      "robots": {
+        "error": null,
+        "blocked": []
+      },
+      "verdict": "same_for_both",
+      "control_status": 200,
+      "refused": [],
+      "differs": []
+    },
+    {
+      "host": "hilton.com",
+      "category": "travel",
+      "url": "https://www.hilton.com/",
+      "identities": {
+        "browser": {
+          "status": 403,
+          "bytes": 121972,
+          "final": "https://www.hilton.com/en/"
+        },
+        "chatgpt_user": {
+          "status": 403,
+          "bytes": 121972,
+          "final": "https://www.hilton.com/"
+        },
+        "claude_user": {
+          "status": 403,
+          "bytes": 121972,
+          "final": "https://www.hilton.com/"
+        },
+        "perplexity_user": {
+          "status": 403,
+          "bytes": 121972,
+          "final": "https://www.hilton.com/"
+        },
+        "gptbot": {
+          "status": 403,
+          "bytes": 121972,
+          "final": "https://www.hilton.com/"
+        },
+        "script": {
+          "status": 403,
+          "bytes": 121972,
+          "final": "https://www.hilton.com/en/"
+        }
+      },
+      "robots": {
+        "error": null,
+        "blocked": []
+      },
+      "verdict": "not_comparable",
+      "control_status": 403
+    },
+    {
+      "host": "hm.com",
+      "category": "apparel",
+      "url": "https://www.hm.com/",
+      "identities": {
+        "browser": {
+          "status": 403,
+          "bytes": 364,
+          "final": "https://www.hm.com/"
+        },
+        "chatgpt_user": {
+          "status": 403,
+          "bytes": 364,
+          "final": "https://www.hm.com/"
+        },
+        "claude_user": {
+          "status": 403,
+          "bytes": 364,
+          "final": "https://www.hm.com/"
+        },
+        "perplexity_user": {
+          "status": 403,
+          "bytes": 364,
+          "final": "https://www.hm.com/"
+        },
+        "gptbot": {
+          "status": 403,
+          "bytes": 364,
+          "final": "https://www.hm.com/"
+        },
+        "script": {
+          "status": 403,
+          "bytes": 364,
+          "final": "https://www.hm.com/"
+        }
+      },
+      "robots": {
+        "error": null,
+        "blocked": []
+      },
+      "verdict": "not_comparable",
+      "control_status": 403
+    },
+    {
+      "host": "homedepot.com",
+      "category": "retail",
+      "url": "https://www.homedepot.com/",
+      "identities": {
+        "browser": {
+          "status": 403,
+          "bytes": 369,
+          "final": "https://www.homedepot.com/"
+        },
+        "chatgpt_user": {
+          "status": 403,
+          "bytes": 369,
+          "final": "https://www.homedepot.com/"
+        },
+        "claude_user": {
+          "status": 403,
+          "bytes": 369,
+          "final": "https://www.homedepot.com/"
+        },
+        "perplexity_user": {
+          "status": 403,
+          "bytes": 369,
+          "final": "https://www.homedepot.com/"
+        },
+        "gptbot": {
+          "status": 403,
+          "bytes": 371,
+          "final": "https://www.homedepot.com/"
+        },
+        "script": {
+          "status": 403,
+          "bytes": 371,
+          "final": "https://www.homedepot.com/"
+        }
+      },
+      "robots": {
+        "error": null,
+        "blocked": []
+      },
+      "verdict": "not_comparable",
+      "control_status": 403
+    },
+    {
+      "host": "hotels.com",
+      "category": "travel",
+      "url": "https://www.hotels.com/",
+      "identities": {
+        "browser": {
+          "status": 429,
+          "bytes": 26842,
+          "final": "https://www.hotels.com/"
+        },
+        "chatgpt_user": {
+          "status": 0,
+          "bytes": 0,
+          "final": "https://www.hotels.com/"
+        },
+        "claude_user": {
+          "status": 0,
+          "bytes": 0,
+          "final": "https://www.hotels.com/"
+        },
+        "perplexity_user": {
+          "status": 0,
+          "bytes": 0,
+          "final": "https://www.hotels.com/"
+        },
+        "gptbot": {
+          "status": 0,
+          "bytes": 0,
+          "final": "https://www.hotels.com/"
+        },
+        "script": {
+          "status": 429,
+          "bytes": 130874,
+          "final": "https://www.hotels.com/"
+        }
+      },
+      "robots": {
+        "error": null,
+        "blocked": []
+      },
+      "verdict": "not_comparable",
+      "control_status": 429
+    },
+    {
+      "host": "hyatt.com",
+      "category": "travel",
+      "url": "https://www.hyatt.com/",
+      "identities": {
+        "browser": {
+          "status": 403,
+          "bytes": 12858,
+          "final": "https://www.hyatt.com/"
+        },
+        "chatgpt_user": {
+          "status": 403,
+          "bytes": 12858,
+          "final": "https://www.hyatt.com/"
+        },
+        "claude_user": {
+          "status": 403,
+          "bytes": 12858,
+          "final": "https://www.hyatt.com/"
+        },
+        "perplexity_user": {
+          "status": 403,
+          "bytes": 12858,
+          "final": "https://www.hyatt.com/"
+        },
+        "gptbot": {
+          "status": 403,
+          "bytes": 12857,
+          "final": "https://www.hyatt.com/"
+        },
+        "script": {
+          "status": 403,
+          "bytes": 12857,
+          "final": "https://www.hyatt.com/"
+        }
+      },
+      "robots": {
+        "error": null,
+        "blocked": []
+      },
+      "verdict": "not_comparable",
+      "control_status": 403
+    },
+    {
+      "host": "ihg.com",
+      "category": "travel",
+      "url": "https://www.ihg.com/",
+      "identities": {
+        "browser": {
+          "status": 403,
+          "bytes": 363,
+          "final": "https://www.ihg.com/"
+        },
+        "chatgpt_user": {
+          "status": 403,
+          "bytes": 363,
+          "final": "https://www.ihg.com/"
+        },
+        "claude_user": {
+          "status": 403,
+          "bytes": 363,
+          "final": "https://www.ihg.com/"
+        },
+        "perplexity_user": {
+          "status": 403,
+          "bytes": 363,
+          "final": "https://www.ihg.com/"
+        },
+        "gptbot": {
+          "status": 403,
+          "bytes": 363,
+          "final": "https://www.ihg.com/"
+        },
+        "script": {
+          "status": 200,
+          "bytes": 275286,
+          "final": "https://www.ihg.com/hotels/tr/tr/reservation"
+        }
+      },
+      "robots": {
+        "error": null,
+        "blocked": []
+      },
+      "verdict": "not_comparable",
+      "control_status": 403
+    },
+    {
+      "host": "ikea.com",
+      "category": "retail",
+      "url": "https://www.ikea.com/",
+      "identities": {
+        "browser": {
+          "status": 200,
+          "bytes": 566004,
+          "final": "https://www.ikea.com/"
+        },
+        "chatgpt_user": {
+          "status": 200,
+          "bytes": 566004,
+          "final": "https://www.ikea.com/"
+        },
+        "claude_user": {
+          "status": 200,
+          "bytes": 566004,
+          "final": "https://www.ikea.com/"
+        },
+        "perplexity_user": {
+          "status": 200,
+          "bytes": 566004,
+          "final": "https://www.ikea.com/"
+        },
+        "gptbot": {
+          "status": 200,
+          "bytes": 566004,
+          "final": "https://www.ikea.com/"
+        },
+        "script": {
+          "status": 200,
+          "bytes": 566004,
+          "final": "https://www.ikea.com/"
+        }
+      },
+      "robots": {
+        "error": null,
+        "blocked": []
+      },
+      "verdict": "same_for_both",
+      "control_status": 200,
+      "refused": [],
+      "differs": []
+    },
+    {
+      "host": "indeed.com",
+      "category": "services",
+      "url": "https://www.indeed.com/",
+      "identities": {
+        "browser": {
+          "status": 200,
+          "bytes": 490430,
+          "final": "https://tr.indeed.com/?r=us"
+        },
+        "chatgpt_user": {
+          "status": 403,
+          "bytes": 27645,
+          "final": "https://www.indeed.com/"
+        },
+        "claude_user": {
+          "status": 200,
+          "bytes": 588572,
+          "final": "https://tr.indeed.com/?r=us"
+        },
+        "perplexity_user": {
+          "status": 200,
+          "bytes": 588599,
+          "final": "https://tr.indeed.com/?r=us"
+        },
+        "gptbot": {
+          "status": 403,
+          "bytes": 27603,
+          "final": "https://www.indeed.com/"
+        },
+        "script": {
+          "status": 403,
+          "bytes": 25742,
+          "final": "https://www.indeed.com/"
+        }
+      },
+      "robots": {
+        "error": null,
+        "blocked": []
+      },
+      "verdict": "refuses_agents",
+      "control_status": 200,
+      "refused": [
+        "chatgpt_user",
+        "gptbot"
+      ],
+      "differs": [],
+      "difference_recheck": {
+        "proposed": [
+          "claude_user",
+          "perplexity_user"
+        ],
+        "held": [],
+        "bytes": {}
+      }
+    },
+    {
+      "host": "instacart.com",
+      "category": "delivery",
+      "url": "https://www.instacart.com/",
+      "identities": {
+        "browser": {
+          "status": 200,
+          "bytes": 1024689,
+          "final": "https://www.instacart.com/"
+        },
+        "chatgpt_user": {
+          "status": 200,
+          "bytes": 1024557,
+          "final": "https://www.instacart.com/"
+        },
+        "claude_user": {
+          "status": 200,
+          "bytes": 1024568,
+          "final": "https://www.instacart.com/"
+        },
+        "perplexity_user": {
+          "status": 200,
+          "bytes": 1024576,
+          "final": "https://www.instacart.com/"
+        },
+        "gptbot": {
+          "status": 200,
+          "bytes": 1024525,
+          "final": "https://www.instacart.com/"
+        },
+        "script": {
+          "status": 200,
+          "bytes": 1024495,
+          "final": "https://www.instacart.com/"
+        }
+      },
+      "robots": {
+        "error": null,
+        "blocked": [
+          "PerplexityBot",
+          "Perplexity-User",
+          "meta-externalagent"
+        ]
+      },
+      "verdict": "same_for_both",
+      "control_status": 200,
+      "refused": [],
+      "differs": []
+    },
+    {
+      "host": "jetblue.com",
+      "category": "travel",
+      "url": "https://www.jetblue.com/",
+      "identities": {
+        "browser": {
+          "status": 200,
+          "bytes": 638418,
+          "final": "https://www.jetblue.com/"
+        },
+        "chatgpt_user": {
+          "status": 200,
+          "bytes": 638521,
+          "final": "https://www.jetblue.com/"
+        },
+        "claude_user": {
+          "status": 200,
+          "bytes": 638521,
+          "final": "https://www.jetblue.com/"
+        },
+        "perplexity_user": {
+          "status": 200,
+          "bytes": 638521,
+          "final": "https://www.jetblue.com/"
+        },
+        "gptbot": {
+          "status": 200,
+          "bytes": 638521,
+          "final": "https://www.jetblue.com/"
+        },
+        "script": {
+          "status": 200,
+          "bytes": 638521,
+          "final": "https://www.jetblue.com/"
+        }
+      },
+      "robots": {
+        "error": null,
+        "blocked": []
+      },
+      "verdict": "same_for_both",
+      "control_status": 200,
+      "refused": [],
+      "differs": []
+    },
+    {
+      "host": "kayak.com",
+      "category": "travel",
+      "url": "https://www.kayak.com/",
+      "identities": {
+        "browser": {
+          "status": 200,
+          "bytes": 1525065,
+          "final": "https://www.kayak.com.tr/?ispredir=true"
+        },
+        "chatgpt_user": {
+          "status": 200,
+          "bytes": 1550446,
+          "final": "https://www.kayak.com/"
+        },
+        "claude_user": {
+          "status": 200,
+          "bytes": 1501874,
+          "final": "https://www.kayak.com.tr/?ispredir=true"
+        },
+        "perplexity_user": {
+          "status": 200,
+          "bytes": 1502275,
+          "final": "https://www.kayak.com.tr/?ispredir=true"
+        },
+        "gptbot": {
+          "status": 200,
+          "bytes": 1537412,
+          "final": "https://www.kayak.com/"
+        },
+        "script": {
+          "status": 200,
+          "bytes": 1537396,
+          "final": "https://www.kayak.com/"
+        }
+      },
+      "robots": {
+        "error": null,
+        "blocked": []
+      },
+      "verdict": "same_for_both",
+      "control_status": 200,
+      "refused": [],
+      "differs": []
+    },
+    {
+      "host": "kohls.com",
+      "category": "retail",
+      "url": "https://www.kohls.com/",
+      "identities": {
+        "browser": {
+          "status": 403,
+          "bytes": 365,
+          "final": "https://www.kohls.com/"
+        },
+        "chatgpt_user": {
+          "status": 403,
+          "bytes": 365,
+          "final": "https://www.kohls.com/"
+        },
+        "claude_user": {
+          "status": 403,
+          "bytes": 365,
+          "final": "https://www.kohls.com/"
+        },
+        "perplexity_user": {
+          "status": 403,
+          "bytes": 365,
+          "final": "https://www.kohls.com/"
+        },
+        "gptbot": {
+          "status": 403,
+          "bytes": 365,
+          "final": "https://www.kohls.com/"
+        },
+        "script": {
+          "status": 403,
+          "bytes": 365,
+          "final": "https://www.kohls.com/"
+        }
+      },
+      "robots": {
+        "error": null,
+        "blocked": []
+      },
+      "verdict": "not_comparable",
+      "control_status": 403
+    },
+    {
+      "host": "lowes.com",
+      "category": "retail",
+      "url": "https://www.lowes.com/",
+      "identities": {
+        "browser": {
+          "status": 200,
+          "bytes": 5073,
+          "final": "https://www.lowes.com/"
+        },
+        "chatgpt_user": {
+          "status": 403,
+          "bytes": 365,
+          "final": "https://www.lowes.com/"
+        },
+        "claude_user": {
+          "status": 200,
+          "bytes": 5075,
+          "final": "https://www.lowes.com/"
+        },
+        "perplexity_user": {
+          "status": 403,
+          "bytes": 365,
+          "final": "https://www.lowes.com/"
+        },
+        "gptbot": {
+          "status": 403,
+          "bytes": 365,
+          "final": "https://www.lowes.com/"
+        },
+        "script": {
+          "status": 200,
+          "bytes": 5075,
+          "final": "https://www.lowes.com/"
+        }
+      },
+      "robots": {
+        "error": null,
+        "blocked": []
+      },
+      "verdict": "refuses_agents",
+      "control_status": 200,
+      "refused": [
+        "chatgpt_user",
+        "perplexity_user",
+        "gptbot"
+      ],
+      "differs": []
+    },
+    {
+      "host": "lululemon.com",
+      "category": "apparel",
+      "url": "https://www.lululemon.com/",
+      "identities": {
+        "browser": {
+          "status": 403,
+          "bytes": 372,
+          "final": "https://shop.lululemon.com/"
+        },
+        "chatgpt_user": {
+          "status": 0,
+          "bytes": 0,
+          "final": "https://www.lululemon.com/"
+        },
+        "claude_user": {
+          "status": 0,
+          "bytes": 0,
+          "final": "https://www.lululemon.com/"
+        },
+        "perplexity_user": {
+          "status": 0,
+          "bytes": 0,
+          "final": "https://www.lululemon.com/"
+        },
+        "gptbot": {
+          "status": 0,
+          "bytes": 0,
+          "final": "https://www.lululemon.com/"
+        },
+        "script": {
+          "status": 0,
+          "bytes": 0,
+          "final": "https://www.lululemon.com/"
+        }
+      },
+      "robots": {
+        "error": null,
+        "blocked": []
+      },
+      "verdict": "not_comparable",
+      "control_status": 403
+    },
+    {
+      "host": "macys.com",
+      "category": "retail",
+      "url": "https://www.macys.com/",
+      "identities": {
+        "browser": {
+          "status": 200,
+          "bytes": 1566601,
+          "final": "https://www.macys.com/"
+        },
+        "chatgpt_user": {
+          "status": 403,
+          "bytes": 9900,
+          "final": "https://www.macys.com/"
+        },
+        "claude_user": {
+          "status": 200,
+          "bytes": 1566601,
+          "final": "https://www.macys.com/"
+        },
+        "perplexity_user": {
+          "status": 200,
+          "bytes": 1566601,
+          "final": "https://www.macys.com/"
+        },
+        "gptbot": {
+          "status": 403,
+          "bytes": 9900,
+          "final": "https://www.macys.com/"
+        },
+        "script": {
+          "status": 403,
+          "bytes": 9900,
+          "final": "https://www.macys.com/"
+        }
+      },
+      "robots": {
+        "error": null,
+        "blocked": []
+      },
+      "verdict": "refuses_agents",
+      "control_status": 200,
+      "refused": [
+        "chatgpt_user",
+        "gptbot"
+      ],
+      "differs": []
+    },
+    {
+      "host": "marriott.com",
+      "category": "travel",
+      "url": "https://www.marriott.com/",
+      "identities": {
+        "browser": {
+          "status": 403,
+          "bytes": 368,
+          "final": "https://www.marriott.com/"
+        },
+        "chatgpt_user": {
+          "status": 403,
+          "bytes": 368,
+          "final": "https://www.marriott.com/"
+        },
+        "claude_user": {
+          "status": 403,
+          "bytes": 368,
+          "final": "https://www.marriott.com/"
+        },
+        "perplexity_user": {
+          "status": 403,
+          "bytes": 368,
+          "final": "https://www.marriott.com/"
+        },
+        "gptbot": {
+          "status": 403,
+          "bytes": 368,
+          "final": "https://www.marriott.com/"
+        },
+        "script": {
+          "status": 403,
+          "bytes": 368,
+          "final": "https://www.marriott.com/"
+        }
+      },
+      "robots": {
+        "error": null,
+        "blocked": []
+      },
+      "verdict": "not_comparable",
+      "control_status": 403
+    },
+    {
+      "host": "newegg.com",
+      "category": "retail",
+      "url": "https://www.newegg.com/",
+      "identities": {
+        "browser": {
+          "status": 200,
+          "bytes": 692928,
+          "final": "https://www.newegg.com/"
+        },
+        "chatgpt_user": {
+          "status": 200,
+          "bytes": 692928,
+          "final": "https://www.newegg.com/"
+        },
+        "claude_user": {
+          "status": 200,
+          "bytes": 692928,
+          "final": "https://www.newegg.com/"
+        },
+        "perplexity_user": {
+          "status": 200,
+          "bytes": 692928,
+          "final": "https://www.newegg.com/"
+        },
+        "gptbot": {
+          "status": 200,
+          "bytes": 692928,
+          "final": "https://www.newegg.com/"
+        },
+        "script": {
+          "status": 200,
+          "bytes": 692928,
+          "final": "https://www.newegg.com/"
+        }
+      },
+      "robots": {
+        "error": null,
+        "blocked": []
+      },
+      "verdict": "same_for_both",
+      "control_status": 200,
+      "refused": [],
+      "differs": []
+    },
+    {
+      "host": "nike.com",
+      "category": "apparel",
+      "url": "https://www.nike.com/",
+      "identities": {
+        "browser": {
+          "status": 200,
+          "bytes": 700268,
+          "final": "https://www.nike.com/tr/"
+        },
+        "chatgpt_user": {
+          "status": 403,
+          "bytes": 364,
+          "final": "https://www.nike.com/"
+        },
+        "claude_user": {
+          "status": 403,
+          "bytes": 364,
+          "final": "https://www.nike.com/"
+        },
+        "perplexity_user": {
+          "status": 403,
+          "bytes": 366,
+          "final": "https://www.nike.com/"
+        },
+        "gptbot": {
+          "status": 403,
+          "bytes": 364,
+          "final": "https://www.nike.com/"
+        },
+        "script": {
+          "status": 200,
+          "bytes": 700267,
+          "final": "https://www.nike.com/tr/"
+        }
+      },
+      "robots": {
+        "error": null,
+        "blocked": []
+      },
+      "verdict": "refuses_agents",
+      "control_status": 200,
+      "refused": [
+        "chatgpt_user",
+        "claude_user",
+        "perplexity_user",
+        "gptbot"
+      ],
+      "differs": []
+    },
+    {
+      "host": "nordstrom.com",
+      "category": "retail",
+      "url": "https://www.nordstrom.com/",
+      "identities": {
+        "browser": {
+          "status": 200,
+          "bytes": 259937,
+          "final": "https://www.nordstrom.com/"
+        },
+        "chatgpt_user": {
+          "status": 200,
+          "bytes": 38052,
+          "final": "https://www.nordstrom.com/"
+        },
+        "claude_user": {
+          "status": 200,
+          "bytes": 38052,
+          "final": "https://www.nordstrom.com/"
+        },
+        "perplexity_user": {
+          "status": 200,
+          "bytes": 38052,
+          "final": "https://www.nordstrom.com/"
+        },
+        "gptbot": {
+          "status": 200,
+          "bytes": 38052,
+          "final": "https://www.nordstrom.com/"
+        },
+        "script": {
+          "status": 200,
+          "bytes": 259937,
+          "final": "https://www.nordstrom.com/"
+        }
+      },
+      "robots": {
+        "error": null,
+        "blocked": []
+      },
+      "verdict": "serves_agents_differently",
+      "control_status": 200,
+      "refused": [],
+      "differs": [
+        "chatgpt_user",
+        "claude_user",
+        "perplexity_user",
+        "gptbot"
+      ],
+      "difference_recheck": {
+        "proposed": [
+          "chatgpt_user",
+          "claude_user",
+          "perplexity_user",
+          "gptbot"
+        ],
+        "held": [
+          "chatgpt_user",
+          "claude_user",
+          "perplexity_user",
+          "gptbot"
+        ],
+        "bytes": {
+          "browser": 259938,
+          "chatgpt_user": 38052,
+          "claude_user": 38052,
+          "perplexity_user": 38052,
+          "gptbot": 38052
+        }
+      }
+    },
+    {
+      "host": "opentable.com",
+      "category": "delivery",
+      "url": "https://www.opentable.com/",
+      "identities": {
+        "browser": {
+          "status": 0,
+          "bytes": 0,
+          "final": "https://www.opentable.com/"
+        },
+        "chatgpt_user": {
+          "status": 0,
+          "bytes": 0,
+          "final": "https://www.opentable.com/"
+        },
+        "claude_user": {
+          "status": 0,
+          "bytes": 0,
+          "final": "https://www.opentable.com/"
+        },
+        "perplexity_user": {
+          "status": 0,
+          "bytes": 0,
+          "final": "https://www.opentable.com/"
+        },
+        "gptbot": {
+          "status": 0,
+          "bytes": 0,
+          "final": "https://www.opentable.com/"
+        },
+        "script": {
+          "status": 0,
+          "bytes": 0,
+          "final": "https://www.opentable.com/"
+        }
+      },
+      "robots": {
+        "error": "empty",
+        "blocked": []
+      },
+      "verdict": "not_comparable",
+      "control_status": 0
+    },
+    {
+      "host": "overstock.com",
+      "category": "retail",
+      "url": "https://www.overstock.com/",
+      "identities": {
+        "browser": {
+          "status": 200,
+          "bytes": 326443,
+          "final": "https://www.overstock.com/"
+        },
+        "chatgpt_user": {
+          "status": 200,
+          "bytes": 115545,
+          "final": "https://www.overstock.com/"
+        },
+        "claude_user": {
+          "status": 200,
+          "bytes": 115545,
+          "final": "https://www.overstock.com/"
+        },
+        "perplexity_user": {
+          "status": 200,
+          "bytes": 115545,
+          "final": "https://www.overstock.com/"
+        },
+        "gptbot": {
+          "status": 200,
+          "bytes": 115545,
+          "final": "https://www.overstock.com/"
+        },
+        "script": {
+          "status": 403,
+          "bytes": 371,
+          "final": "https://www.overstock.com/"
+        }
+      },
+      "robots": {
+        "error": null,
+        "blocked": []
+      },
+      "verdict": "serves_agents_differently",
+      "control_status": 200,
+      "refused": [],
+      "differs": [
+        "chatgpt_user",
+        "claude_user",
+        "perplexity_user",
+        "gptbot"
+      ],
+      "difference_recheck": {
+        "proposed": [
+          "chatgpt_user",
+          "claude_user",
+          "perplexity_user",
+          "gptbot"
+        ],
+        "held": [
+          "chatgpt_user",
+          "claude_user",
+          "perplexity_user",
+          "gptbot"
+        ],
+        "bytes": {
+          "browser": 326443,
+          "chatgpt_user": 115545,
+          "claude_user": 115545,
+          "perplexity_user": 115545,
+          "gptbot": 115545
+        }
+      }
+    },
+    {
+      "host": "priceline.com",
+      "category": "travel",
+      "url": "https://www.priceline.com/",
+      "identities": {
+        "browser": {
+          "status": 200,
+          "bytes": 712755,
+          "final": "https://www.priceline.com/"
+        },
+        "chatgpt_user": {
+          "status": 200,
+          "bytes": 713990,
+          "final": "https://www.priceline.com/"
+        },
+        "claude_user": {
+          "status": 403,
+          "bytes": 5373,
+          "final": "https://www.priceline.com/"
+        },
+        "perplexity_user": {
+          "status": 403,
+          "bytes": 5373,
+          "final": "https://www.priceline.com/"
+        },
+        "gptbot": {
+          "status": 403,
+          "bytes": 5373,
+          "final": "https://www.priceline.com/"
+        },
+        "script": {
+          "status": 403,
+          "bytes": 5373,
+          "final": "https://www.priceline.com/"
+        }
+      },
+      "robots": {
+        "error": null,
+        "blocked": []
+      },
+      "verdict": "refuses_agents",
+      "control_status": 200,
+      "refused": [
+        "claude_user",
+        "perplexity_user",
+        "gptbot"
+      ],
+      "differs": []
+    },
+    {
+      "host": "redfin.com",
+      "category": "services",
+      "url": "https://www.redfin.com/",
+      "identities": {
+        "browser": {
+          "status": 405,
+          "bytes": 2158,
+          "final": "https://www.redfin.com/"
+        },
+        "chatgpt_user": {
+          "status": 405,
+          "bytes": 2158,
+          "final": "https://www.redfin.com/"
+        },
+        "claude_user": {
+          "status": 405,
+          "bytes": 2158,
+          "final": "https://www.redfin.com/"
+        },
+        "perplexity_user": {
+          "status": 405,
+          "bytes": 2158,
+          "final": "https://www.redfin.com/"
+        },
+        "gptbot": {
+          "status": 405,
+          "bytes": 2158,
+          "final": "https://www.redfin.com/"
+        },
+        "script": {
+          "status": 429,
+          "bytes": 1911,
+          "final": "https://ratelimited.redfin.com/"
+        }
+      },
+      "robots": {
+        "error": null,
+        "blocked": []
+      },
+      "verdict": "not_comparable",
+      "control_status": 405
+    },
+    {
+      "host": "riteaid.com",
+      "category": "pharmacy",
+      "url": "https://www.riteaid.com/",
+      "identities": {
+        "browser": {
+          "status": 403,
+          "bytes": 4833,
+          "final": "https://riteaid.com/"
+        },
+        "chatgpt_user": {
+          "status": 403,
+          "bytes": 4833,
+          "final": "https://riteaid.com/"
+        },
+        "claude_user": {
+          "status": 403,
+          "bytes": 4833,
+          "final": "https://riteaid.com/"
+        },
+        "perplexity_user": {
+          "status": 403,
+          "bytes": 4833,
+          "final": "https://riteaid.com/"
+        },
+        "gptbot": {
+          "status": 403,
+          "bytes": 4547,
+          "final": "https://riteaid.com/"
+        },
+        "script": {
+          "status": 403,
+          "bytes": 4547,
+          "final": "https://riteaid.com/"
+        }
+      },
+      "robots": {
+        "error": null,
+        "blocked": []
+      },
+      "verdict": "not_comparable",
+      "control_status": 403
+    },
+    {
+      "host": "seatgeek.com",
+      "category": "tickets",
+      "url": "https://www.seatgeek.com/",
+      "identities": {
+        "browser": {
+          "status": 403,
+          "bytes": 780,
+          "final": "https://www.seatgeek.com/"
+        },
+        "chatgpt_user": {
+          "status": 403,
+          "bytes": 780,
+          "final": "https://www.seatgeek.com/"
+        },
+        "claude_user": {
+          "status": 403,
+          "bytes": 780,
+          "final": "https://www.seatgeek.com/"
+        },
+        "perplexity_user": {
+          "status": 403,
+          "bytes": 780,
+          "final": "https://www.seatgeek.com/"
+        },
+        "gptbot": {
+          "status": 403,
+          "bytes": 780,
+          "final": "https://www.seatgeek.com/"
+        },
+        "script": {
+          "status": 403,
+          "bytes": 780,
+          "final": "https://www.seatgeek.com/"
+        }
+      },
+      "robots": {
+        "error": null,
+        "blocked": []
+      },
+      "verdict": "not_comparable",
+      "control_status": 403
+    },
+    {
+      "host": "sephora.com",
+      "category": "apparel",
+      "url": "https://www.sephora.com/",
+      "identities": {
+        "browser": {
+          "status": 200,
+          "bytes": 1048083,
+          "final": "https://www.sephora.com/"
+        },
+        "chatgpt_user": {
+          "status": 403,
+          "bytes": 367,
+          "final": "https://www.sephora.com/"
+        },
+        "claude_user": {
+          "status": 403,
+          "bytes": 367,
+          "final": "https://www.sephora.com/"
+        },
+        "perplexity_user": {
+          "status": 403,
+          "bytes": 367,
+          "final": "https://www.sephora.com/"
+        },
+        "gptbot": {
+          "status": 403,
+          "bytes": 367,
+          "final": "https://www.sephora.com/"
+        },
+        "script": {
+          "status": 403,
+          "bytes": 367,
+          "final": "https://www.sephora.com/"
+        }
+      },
+      "robots": {
+        "error": null,
+        "blocked": []
+      },
+      "verdict": "refuses_agents",
+      "control_status": 200,
+      "refused": [
+        "chatgpt_user",
+        "claude_user",
+        "perplexity_user",
+        "gptbot"
+      ],
+      "differs": []
+    },
+    {
+      "host": "shein.com",
+      "category": "apparel",
+      "url": "https://www.shein.com/",
+      "identities": {
+        "browser": {
+          "status": 200,
+          "bytes": 1040629,
+          "final": "https://tr.shein.com/?cdn_rsite=ak&ref=www&rep=dir&ret=tr"
+        },
+        "chatgpt_user": {
+          "status": 200,
+          "bytes": 1040803,
+          "final": "https://tr.shein.com/?cdn_rsite=ak&ref=www&rep=dir&ret=tr"
+        },
+        "claude_user": {
+          "status": 200,
+          "bytes": 1040796,
+          "final": "https://tr.shein.com/?cdn_rsite=ak&ref=www&rep=dir&ret=tr"
+        },
+        "perplexity_user": {
+          "status": 200,
+          "bytes": 1040412,
+          "final": "https://tr.shein.com/?cdn_rsite=ak&ref=www&rep=dir&ret=tr"
+        },
+        "gptbot": {
+          "status": 200,
+          "bytes": 1040795,
+          "final": "https://tr.shein.com/?cdn_rsite=ak&ref=www&rep=dir&ret=tr"
+        },
+        "script": {
+          "status": 200,
+          "bytes": 1040785,
+          "final": "https://tr.shein.com/?cdn_rsite=ak&ref=www&rep=dir&ret=tr"
+        }
+      },
+      "robots": {
+        "error": null,
+        "blocked": []
+      },
+      "verdict": "same_for_both",
+      "control_status": 200,
+      "refused": [],
+      "differs": []
+    },
+    {
+      "host": "skyscanner.com",
+      "category": "travel",
+      "url": "https://www.skyscanner.com/",
+      "identities": {
+        "browser": {
+          "status": 200,
+          "bytes": 199918,
+          "final": "https://www.skyscanner.com.tr/?previousCultureSource=GEO_LOCATION&redirectedFrom=www.skyscanner.com&userSessionDataId=a8179995-a4e2-4520-b7ff-4e589b7236f0&session_handoff=eyJhbGciOiJFUzI1NiIsImtpZCI6InNlc3Npb24tc2VydmljZS1oYW5kb2ZmLWtleS0yMDI2LTA1IiwidHlwIjoiSldUIn0.eyJodHRwczovL3NreXNjYW5uZXIubmV0L3Nlc3Npb25faWQiOiIwMWEwNTFiYi02NDg3LTgwMDItYjY2YS0zYWIwMTc3NjFmNmQiLCJleHAiOjE3ODgwNzc2NDB9.QCP4bMuHn7YV1V3QO_iAiBwCb_ZuWrD2KhwQ35t2uxSvI8KQczxFvvLRaOq9M5_SubV4SvP3e8G5g8WLYx26MA"
+        },
+        "chatgpt_user": {
+          "status": 200,
+          "bytes": 708,
+          "final": "https://www.skyscanner.com/sttc/px/captcha-v2/index.html?url=Lz8=&uuid=bc037b73-a44a-11f1-8964-e2279e4619d8&vid="
+        },
+        "claude_user": {
+          "status": 200,
+          "bytes": 708,
+          "final": "https://www.skyscanner.com/sttc/px/captcha-v2/index.html?url=Lz8=&uuid=bc2c5e96-a44a-11f1-a40b-61f36aee6fbe&vid="
+        },
+        "perplexity_user": {
+          "status": 200,
+          "bytes": 708,
+          "final": "https://www.skyscanner.com/sttc/px/captcha-v2/index.html?url=Lz8=&uuid=bc5726ae-a44a-11f1-9a1f-37bad9c37866&vid="
+        },
+        "gptbot": {
+          "status": 200,
+          "bytes": 708,
+          "final": "https://www.skyscanner.com/sttc/px/captcha-v2/index.html?url=Lz8=&uuid=bc85cb03-a44a-11f1-9b5c-37bad9c37866&vid="
+        },
+        "script": {
+          "status": 200,
+          "bytes": 708,
+          "final": "https://www.skyscanner.com/sttc/px/captcha-v2/index.html?url=Lz8=&uuid=bcb0846c-a44a-11f1-a799-61f36aee6fbe&vid="
+        }
+      },
+      "robots": {
+        "error": null,
+        "blocked": [
+          "meta-externalagent"
+        ]
+      },
+      "verdict": "serves_agents_differently",
+      "control_status": 200,
+      "refused": [],
+      "differs": [
+        "chatgpt_user",
+        "claude_user",
+        "perplexity_user",
+        "gptbot"
+      ],
+      "difference_recheck": {
+        "proposed": [
+          "chatgpt_user",
+          "claude_user",
+          "perplexity_user",
+          "gptbot"
+        ],
+        "held": [
+          "chatgpt_user",
+          "claude_user",
+          "perplexity_user",
+          "gptbot"
+        ],
+        "bytes": {
+          "browser": 200030,
+          "chatgpt_user": 708,
+          "claude_user": 708,
+          "perplexity_user": 708,
+          "gptbot": 708
+        }
+      }
+    },
+    {
+      "host": "southwest.com",
+      "category": "travel",
+      "url": "https://www.southwest.com/",
+      "identities": {
+        "browser": {
+          "status": 200,
+          "bytes": 7674,
+          "final": "https://www.southwest.com/"
+        },
+        "chatgpt_user": {
+          "status": 200,
+          "bytes": 7674,
+          "final": "https://www.southwest.com/"
+        },
+        "claude_user": {
+          "status": 200,
+          "bytes": 7674,
+          "final": "https://www.southwest.com/"
+        },
+        "perplexity_user": {
+          "status": 200,
+          "bytes": 7674,
+          "final": "https://www.southwest.com/"
+        },
+        "gptbot": {
+          "status": 200,
+          "bytes": 7674,
+          "final": "https://www.southwest.com/"
+        },
+        "script": {
+          "status": 200,
+          "bytes": 7674,
+          "final": "https://www.southwest.com/"
+        }
+      },
+      "robots": {
+        "error": null,
+        "blocked": []
+      },
+      "verdict": "same_for_both",
+      "control_status": 200,
+      "refused": [],
+      "differs": []
+    },
+    {
+      "host": "staples.com",
+      "category": "retail",
+      "url": "https://www.staples.com/",
+      "identities": {
+        "browser": {
+          "status": 403,
+          "bytes": 369,
+          "final": "https://www.staples.com/"
+        },
+        "chatgpt_user": {
+          "status": 403,
+          "bytes": 369,
+          "final": "https://www.staples.com/"
+        },
+        "claude_user": {
+          "status": 403,
+          "bytes": 369,
+          "final": "https://www.staples.com/"
+        },
+        "perplexity_user": {
+          "status": 403,
+          "bytes": 369,
+          "final": "https://www.staples.com/"
+        },
+        "gptbot": {
+          "status": 403,
+          "bytes": 369,
+          "final": "https://www.staples.com/"
+        },
+        "script": {
+          "status": 403,
+          "bytes": 369,
+          "final": "https://www.staples.com/"
+        }
+      },
+      "robots": {
+        "error": null,
+        "blocked": []
+      },
+      "verdict": "not_comparable",
+      "control_status": 403
+    },
+    {
+      "host": "stubhub.com",
+      "category": "tickets",
+      "url": "https://www.stubhub.com/",
+      "identities": {
+        "browser": {
+          "status": 200,
+          "bytes": 183692,
+          "final": "https://www.stubhub.com/"
+        },
+        "chatgpt_user": {
+          "status": 200,
+          "bytes": 183697,
+          "final": "https://www.stubhub.com/"
+        },
+        "claude_user": {
+          "status": 200,
+          "bytes": 178829,
+          "final": "https://www.stubhub.com/"
+        },
+        "perplexity_user": {
+          "status": 200,
+          "bytes": 186343,
+          "final": "https://www.stubhub.com/"
+        },
+        "gptbot": {
+          "status": 200,
+          "bytes": 186310,
+          "final": "https://www.stubhub.com/"
+        },
+        "script": {
+          "status": 403,
+          "bytes": 919,
+          "final": "https://www.stubhub.com/"
+        }
+      },
+      "robots": {
+        "error": null,
+        "blocked": []
+      },
+      "verdict": "same_for_both",
+      "control_status": 200,
+      "refused": [],
+      "differs": []
+    },
+    {
+      "host": "target.com",
+      "category": "retail",
+      "url": "https://www.target.com/",
+      "identities": {
+        "browser": {
+          "status": 200,
+          "bytes": 376498,
+          "final": "https://www.target.com/"
+        },
+        "chatgpt_user": {
+          "status": 200,
+          "bytes": 351379,
+          "final": "https://www.target.com/"
+        },
+        "claude_user": {
+          "status": 200,
+          "bytes": 351379,
+          "final": "https://www.target.com/"
+        },
+        "perplexity_user": {
+          "status": 200,
+          "bytes": 351379,
+          "final": "https://www.target.com/"
+        },
+        "gptbot": {
+          "status": 200,
+          "bytes": 351379,
+          "final": "https://www.target.com/"
+        },
+        "script": {
+          "status": 200,
+          "bytes": 384755,
+          "final": "https://www.target.com/"
+        }
+      },
+      "robots": {
+        "error": null,
+        "blocked": []
+      },
+      "verdict": "same_for_both",
+      "control_status": 200,
+      "refused": [],
+      "differs": []
+    },
+    {
+      "host": "thumbtack.com",
+      "category": "services",
+      "url": "https://www.thumbtack.com/",
+      "identities": {
+        "browser": {
+          "status": 202,
+          "bytes": 2093,
+          "final": "https://www.thumbtack.com/"
+        },
+        "chatgpt_user": {
+          "status": 202,
+          "bytes": 2093,
+          "final": "https://www.thumbtack.com/"
+        },
+        "claude_user": {
+          "status": 202,
+          "bytes": 2093,
+          "final": "https://www.thumbtack.com/"
+        },
+        "perplexity_user": {
+          "status": 202,
+          "bytes": 2093,
+          "final": "https://www.thumbtack.com/"
+        },
+        "gptbot": {
+          "status": 202,
+          "bytes": 2093,
+          "final": "https://www.thumbtack.com/"
+        },
+        "script": {
+          "status": 202,
+          "bytes": 2093,
+          "final": "https://www.thumbtack.com/"
+        }
+      },
+      "robots": {
+        "error": "empty",
+        "blocked": []
+      },
+      "verdict": "same_for_both",
+      "control_status": 202,
+      "refused": [],
+      "differs": []
+    },
+    {
+      "host": "ticketmaster.com",
+      "category": "tickets",
+      "url": "https://www.ticketmaster.com/",
+      "identities": {
+        "browser": {
+          "status": 403,
+          "bytes": 3066,
+          "final": "https://www.ticketmaster.com/"
+        },
+        "chatgpt_user": {
+          "status": 403,
+          "bytes": 3066,
+          "final": "https://www.ticketmaster.com/"
+        },
+        "claude_user": {
+          "status": 403,
+          "bytes": 3066,
+          "final": "https://www.ticketmaster.com/"
+        },
+        "perplexity_user": {
+          "status": 403,
+          "bytes": 3066,
+          "final": "https://www.ticketmaster.com/"
+        },
+        "gptbot": {
+          "status": 403,
+          "bytes": 3066,
+          "final": "https://www.ticketmaster.com/"
+        },
+        "script": {
+          "status": 403,
+          "bytes": 3066,
+          "final": "https://www.ticketmaster.com/"
+        }
+      },
+      "robots": {
+        "error": null,
+        "blocked": []
+      },
+      "verdict": "not_comparable",
+      "control_status": 403
+    },
+    {
+      "host": "tripadvisor.com",
+      "category": "travel",
+      "url": "https://www.tripadvisor.com/",
+      "identities": {
+        "browser": {
+          "status": 200,
+          "bytes": 387235,
+          "final": "https://www.tripadvisor.com/"
+        },
+        "chatgpt_user": {
+          "status": 200,
+          "bytes": 382036,
+          "final": "https://www.tripadvisor.com/"
+        },
+        "claude_user": {
+          "status": 200,
+          "bytes": 382037,
+          "final": "https://www.tripadvisor.com/"
+        },
+        "perplexity_user": {
+          "status": 403,
+          "bytes": 778,
+          "final": "https://www.tripadvisor.com/"
+        },
+        "gptbot": {
+          "status": 403,
+          "bytes": 775,
+          "final": "https://www.tripadvisor.com/"
+        },
+        "script": {
+          "status": 403,
+          "bytes": 775,
+          "final": "https://www.tripadvisor.com/"
+        }
+      },
+      "robots": {
+        "error": null,
+        "blocked": [
+          "GPTBot",
+          "ClaudeBot",
+          "CCBot",
+          "Applebot-Extended",
+          "Bytespider",
+          "meta-externalagent",
+          "Google-Extended"
+        ]
+      },
+      "verdict": "refuses_agents",
+      "control_status": 200,
+      "refused": [
+        "perplexity_user",
+        "gptbot"
+      ],
+      "differs": []
+    },
+    {
+      "host": "ubereats.com",
+      "category": "delivery",
+      "url": "https://www.ubereats.com/",
+      "identities": {
+        "browser": {
+          "status": 200,
+          "bytes": 431857,
+          "final": "https://www.ubereats.com/"
+        },
+        "chatgpt_user": {
+          "status": 403,
+          "bytes": 8047,
+          "final": "https://www.ubereats.com/"
+        },
+        "claude_user": {
+          "status": 403,
+          "bytes": 8047,
+          "final": "https://www.ubereats.com/"
+        },
+        "perplexity_user": {
+          "status": 403,
+          "bytes": 8069,
+          "final": "https://www.ubereats.com/"
+        },
+        "gptbot": {
+          "status": 403,
+          "bytes": 7983,
+          "final": "https://www.ubereats.com/"
+        },
+        "script": {
+          "status": 403,
+          "bytes": 7855,
+          "final": "https://www.ubereats.com/"
+        }
+      },
+      "robots": {
+        "error": null,
+        "blocked": []
+      },
+      "verdict": "refuses_agents",
+      "control_status": 200,
+      "refused": [
+        "chatgpt_user",
+        "claude_user",
+        "perplexity_user",
+        "gptbot"
+      ],
+      "differs": []
+    },
+    {
+      "host": "ulta.com",
+      "category": "apparel",
+      "url": "https://www.ulta.com/",
+      "identities": {
+        "browser": {
+          "status": 200,
+          "bytes": 1496650,
+          "final": "https://www.ulta.com/"
+        },
+        "chatgpt_user": {
+          "status": 200,
+          "bytes": 803947,
+          "final": "https://www.ulta.com/"
+        },
+        "claude_user": {
+          "status": 200,
+          "bytes": 803947,
+          "final": "https://www.ulta.com/"
+        },
+        "perplexity_user": {
+          "status": 200,
+          "bytes": 803947,
+          "final": "https://www.ulta.com/"
+        },
+        "gptbot": {
+          "status": 200,
+          "bytes": 803947,
+          "final": "https://www.ulta.com/"
+        },
+        "script": {
+          "status": 200,
+          "bytes": 1492483,
+          "final": "https://www.ulta.com/"
+        }
+      },
+      "robots": {
+        "error": null,
+        "blocked": []
+      },
+      "verdict": "serves_agents_differently",
+      "control_status": 200,
+      "refused": [],
+      "differs": [
+        "chatgpt_user",
+        "claude_user",
+        "perplexity_user",
+        "gptbot"
+      ],
+      "difference_recheck": {
+        "proposed": [
+          "chatgpt_user",
+          "claude_user",
+          "perplexity_user",
+          "gptbot"
+        ],
+        "held": [
+          "chatgpt_user",
+          "claude_user",
+          "perplexity_user",
+          "gptbot"
+        ],
+        "bytes": {
+          "browser": 1496691,
+          "chatgpt_user": 803947,
+          "claude_user": 803947,
+          "perplexity_user": 803947,
+          "gptbot": 803947
+        }
+      }
+    },
+    {
+      "host": "uniqlo.com",
+      "category": "apparel",
+      "url": "https://www.uniqlo.com/",
+      "identities": {
+        "browser": {
+          "status": 200,
+          "bytes": 1916643,
+          "final": "https://www.uniqlo.com/eu-at/en/?showSelector=true"
+        },
+        "chatgpt_user": {
+          "status": 0,
+          "bytes": 0,
+          "final": "https://www.uniqlo.com/"
+        },
+        "claude_user": {
+          "status": 0,
+          "bytes": 0,
+          "final": "https://www.uniqlo.com/"
+        },
+        "perplexity_user": {
+          "status": 0,
+          "bytes": 0,
+          "final": "https://www.uniqlo.com/"
+        },
+        "gptbot": {
+          "status": 0,
+          "bytes": 0,
+          "final": "https://www.uniqlo.com/"
+        },
+        "script": {
+          "status": 0,
+          "bytes": 0,
+          "final": "https://www.uniqlo.com/"
+        }
+      },
+      "robots": {
+        "error": null,
+        "blocked": []
+      },
+      "verdict": "refuses_agents",
+      "control_status": 200,
+      "refused": [
+        "chatgpt_user",
+        "claude_user",
+        "perplexity_user",
+        "gptbot"
+      ],
+      "differs": []
+    },
+    {
+      "host": "united.com",
+      "category": "travel",
+      "url": "https://www.united.com/",
+      "identities": {
+        "browser": {
+          "status": 0,
+          "bytes": 0,
+          "final": "https://www.united.com/"
+        },
+        "chatgpt_user": {
+          "status": 0,
+          "bytes": 0,
+          "final": "https://www.united.com/"
+        },
+        "claude_user": {
+          "status": 0,
+          "bytes": 0,
+          "final": "https://www.united.com/"
+        },
+        "perplexity_user": {
+          "status": 0,
+          "bytes": 0,
+          "final": "https://www.united.com/"
+        },
+        "gptbot": {
+          "status": 0,
+          "bytes": 0,
+          "final": "https://www.united.com/"
+        },
+        "script": {
+          "status": 0,
+          "bytes": 0,
+          "final": "https://www.united.com/"
+        }
+      },
+      "robots": {
+        "error": "empty",
+        "blocked": []
+      },
+      "verdict": "not_comparable",
+      "control_status": 0
+    },
+    {
+      "host": "vividseats.com",
+      "category": "tickets",
+      "url": "https://www.vividseats.com/",
+      "identities": {
+        "browser": {
+          "status": 200,
+          "bytes": 1911,
+          "final": "https://www.vividseats.com/"
+        },
+        "chatgpt_user": {
+          "status": 200,
+          "bytes": 351675,
+          "final": "https://www.vividseats.com/"
+        },
+        "claude_user": {
+          "status": 200,
+          "bytes": 351966,
+          "final": "https://www.vividseats.com/"
+        },
+        "perplexity_user": {
+          "status": 200,
+          "bytes": 351836,
+          "final": "https://www.vividseats.com/"
+        },
+        "gptbot": {
+          "status": 200,
+          "bytes": 331243,
+          "final": "https://www.vividseats.com/"
+        },
+        "script": {
+          "status": 200,
+          "bytes": 332255,
+          "final": "https://www.vividseats.com/"
+        }
+      },
+      "robots": {
+        "error": null,
+        "blocked": []
+      },
+      "verdict": "serves_agents_differently",
+      "control_status": 200,
+      "refused": [],
+      "differs": [
+        "chatgpt_user",
+        "claude_user",
+        "perplexity_user",
+        "gptbot"
+      ],
+      "difference_recheck": {
+        "proposed": [
+          "chatgpt_user",
+          "claude_user",
+          "perplexity_user",
+          "gptbot"
+        ],
+        "held": [
+          "chatgpt_user",
+          "claude_user",
+          "perplexity_user",
+          "gptbot"
+        ],
+        "bytes": {
+          "browser": 1911,
+          "chatgpt_user": 331519,
+          "claude_user": 351780,
+          "perplexity_user": 352418,
+          "gptbot": 351875
+        }
+      }
+    },
+    {
+      "host": "vrbo.com",
+      "category": "travel",
+      "url": "https://www.vrbo.com/",
+      "identities": {
+        "browser": {
+          "status": 429,
+          "bytes": 353,
+          "final": "https://www.vrbo.com/"
+        },
+        "chatgpt_user": {
+          "status": 429,
+          "bytes": 353,
+          "final": "https://www.vrbo.com/"
+        },
+        "claude_user": {
+          "status": 429,
+          "bytes": 353,
+          "final": "https://www.vrbo.com/"
+        },
+        "perplexity_user": {
+          "status": 429,
+          "bytes": 353,
+          "final": "https://www.vrbo.com/"
+        },
+        "gptbot": {
+          "status": 429,
+          "bytes": 353,
+          "final": "https://www.vrbo.com/"
+        },
+        "script": {
+          "status": 429,
+          "bytes": 353,
+          "final": "https://www.vrbo.com/"
+        }
+      },
+      "robots": {
+        "error": null,
+        "blocked": []
+      },
+      "verdict": "not_comparable",
+      "control_status": 429
+    },
+    {
+      "host": "walgreens.com",
+      "category": "pharmacy",
+      "url": "https://www.walgreens.com/",
+      "identities": {
+        "browser": {
+          "status": 200,
+          "bytes": 360399,
+          "final": "https://www.walgreens.com/"
+        },
+        "chatgpt_user": {
+          "status": 403,
+          "bytes": 369,
+          "final": "https://www.walgreens.com/"
+        },
+        "claude_user": {
+          "status": 403,
+          "bytes": 367,
+          "final": "https://www.walgreens.com/"
+        },
+        "perplexity_user": {
+          "status": 403,
+          "bytes": 369,
+          "final": "https://www.walgreens.com/"
+        },
+        "gptbot": {
+          "status": 403,
+          "bytes": 367,
+          "final": "https://www.walgreens.com/"
+        },
+        "script": {
+          "status": 200,
+          "bytes": 363577,
+          "final": "https://www.walgreens.com/"
+        }
+      },
+      "robots": {
+        "error": null,
+        "blocked": []
+      },
+      "verdict": "refuses_agents",
+      "control_status": 200,
+      "refused": [
+        "chatgpt_user",
+        "claude_user",
+        "perplexity_user",
+        "gptbot"
+      ],
+      "differs": []
+    },
+    {
+      "host": "walmart.com",
+      "category": "retail",
+      "url": "https://www.walmart.com/",
+      "identities": {
+        "browser": {
+          "status": 200,
+          "bytes": 402006,
+          "final": "https://www.walmart.com/"
+        },
+        "chatgpt_user": {
+          "status": 200,
+          "bytes": 402006,
+          "final": "https://www.walmart.com/"
+        },
+        "claude_user": {
+          "status": 200,
+          "bytes": 402006,
+          "final": "https://www.walmart.com/"
+        },
+        "perplexity_user": {
+          "status": 200,
+          "bytes": 402006,
+          "final": "https://www.walmart.com/"
+        },
+        "gptbot": {
+          "status": 200,
+          "bytes": 402006,
+          "final": "https://www.walmart.com/"
+        },
+        "script": {
+          "status": 200,
+          "bytes": 399625,
+          "final": "https://www.walmart.com/"
+        }
+      },
+      "robots": {
+        "error": null,
+        "blocked": []
+      },
+      "verdict": "same_for_both",
+      "control_status": 200,
+      "refused": [],
+      "differs": []
+    },
+    {
+      "host": "wayfair.com",
+      "category": "retail",
+      "url": "https://www.wayfair.com/",
+      "identities": {
+        "browser": {
+          "status": 429,
+          "bytes": 5825,
+          "final": "https://www.wayfair.com/"
+        },
+        "chatgpt_user": {
+          "status": 429,
+          "bytes": 5825,
+          "final": "https://www.wayfair.com/"
+        },
+        "claude_user": {
+          "status": 429,
+          "bytes": 5825,
+          "final": "https://www.wayfair.com/"
+        },
+        "perplexity_user": {
+          "status": 429,
+          "bytes": 5825,
+          "final": "https://www.wayfair.com/"
+        },
+        "gptbot": {
+          "status": 429,
+          "bytes": 5825,
+          "final": "https://www.wayfair.com/"
+        },
+        "script": {
+          "status": 429,
+          "bytes": 5825,
+          "final": "https://www.wayfair.com/"
+        }
+      },
+      "robots": {
+        "error": null,
+        "blocked": []
+      },
+      "verdict": "not_comparable",
+      "control_status": 429
+    },
+    {
+      "host": "yelp.com",
+      "category": "services",
+      "url": "https://www.yelp.com/",
+      "identities": {
+        "browser": {
+          "status": 403,
+          "bytes": 776,
+          "final": "https://www.yelp.com/"
+        },
+        "chatgpt_user": {
+          "status": 403,
+          "bytes": 0,
+          "final": "https://www.yelp.com/"
+        },
+        "claude_user": {
+          "status": 403,
+          "bytes": 776,
+          "final": "https://www.yelp.com/"
+        },
+        "perplexity_user": {
+          "status": 403,
+          "bytes": 776,
+          "final": "https://www.yelp.com/"
+        },
+        "gptbot": {
+          "status": 403,
+          "bytes": 0,
+          "final": "https://www.yelp.com/"
+        },
+        "script": {
+          "status": 403,
+          "bytes": 776,
+          "final": "https://www.yelp.com/"
+        }
+      },
+      "robots": {
+        "error": null,
+        "blocked": [
+          "ChatGPT-User",
+          "Claude-User",
+          "PerplexityBot",
+          "Perplexity-User",
+          "GPTBot",
+          "ClaudeBot",
+          "anthropic-ai",
+          "CCBot",
+          "Google-Extended",
+          "meta-externalagent"
+        ]
+      },
+      "verdict": "not_comparable",
+      "control_status": 403
+    },
+    {
+      "host": "zara.com",
+      "category": "apparel",
+      "url": "https://www.zara.com/",
+      "identities": {
+        "browser": {
+          "status": 200,
+          "bytes": 2122,
+          "final": "https://www.zara.com/"
+        },
+        "chatgpt_user": {
+          "status": 403,
+          "bytes": 366,
+          "final": "https://www.zara.com/"
+        },
+        "claude_user": {
+          "status": 403,
+          "bytes": 364,
+          "final": "https://www.zara.com/"
+        },
+        "perplexity_user": {
+          "status": 403,
+          "bytes": 364,
+          "final": "https://www.zara.com/"
+        },
+        "gptbot": {
+          "status": 403,
+          "bytes": 364,
+          "final": "https://www.zara.com/"
+        },
+        "script": {
+          "status": 403,
+          "bytes": 364,
+          "final": "https://www.zara.com/"
+        }
+      },
+      "robots": {
+        "error": null,
+        "blocked": []
+      },
+      "verdict": "refuses_agents",
+      "control_status": 200,
+      "refused": [
+        "chatgpt_user",
+        "claude_user",
+        "perplexity_user",
+        "gptbot"
+      ],
+      "differs": []
+    },
+    {
+      "host": "zillow.com",
+      "category": "services",
+      "url": "https://www.zillow.com/",
+      "identities": {
+        "browser": {
+          "status": 200,
+          "bytes": 421281,
+          "final": "https://www.zillow.com/"
+        },
+        "chatgpt_user": {
+          "status": 403,
+          "bytes": 5776,
+          "final": "https://www.zillow.com/"
+        },
+        "claude_user": {
+          "status": 403,
+          "bytes": 5776,
+          "final": "https://www.zillow.com/"
+        },
+        "perplexity_user": {
+          "status": 403,
+          "bytes": 5776,
+          "final": "https://www.zillow.com/"
+        },
+        "gptbot": {
+          "status": 403,
+          "bytes": 5776,
+          "final": "https://www.zillow.com/"
+        },
+        "script": {
+          "status": 403,
+          "bytes": 5776,
+          "final": "https://www.zillow.com/"
+        }
+      },
+      "robots": {
+        "error": null,
+        "blocked": [
+          "Applebot-Extended",
+          "meta-externalagent"
+        ]
+      },
+      "verdict": "refuses_agents",
+      "control_status": 200,
+      "refused": [
+        "chatgpt_user",
+        "claude_user",
+        "perplexity_user",
+        "gptbot"
+      ],
+      "differs": []
+    }
+  ]
+}
