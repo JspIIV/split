@@ -96,6 +96,11 @@
     clients in general. That is a different claim from refusing agents, so those
     sites are marked <code>not comparable</code> and dropped from the
     denominator rather than counted against anyone.</p>
+    <p><strong>Where you measure from changes the answer.</strong> The same 72
+    sites, measured the same way on the same day from a home connection and from
+    a datacentre, disagreed on 18 of them. Amazon served an agent from one and
+    refused it from the other. So runs are labelled by vantage and never
+    averaged: one number covering both would be true of neither.</p>
     <p style="margin-bottom:0"><strong>This measures the front door, not the
     price.</strong> One homepage, one location, one moment. It says whether an
     agent is let in and whether it is handed the same page. It does not say what
@@ -159,7 +164,7 @@ function render() {
 
   document.getElementById("stamp").textContent =
     "Measured " + new Date(DATA.measured_at).toISOString().slice(0, 16).replace("T", " ") +
-    " UTC from a " + (DATA.vantage === "github" ? "datacentre" : "home") + " connection";
+    " UTC from a " + ((DATA.vantage || "local") === "github" ? "datacentre" : "home") + " connection";
 }
 
 document.querySelectorAll("button[data-filter]").forEach(button => {

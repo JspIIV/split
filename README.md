@@ -125,3 +125,21 @@ storage, which ends the transaction on this network, and nothing inside it
 raises, which reverts it. A site that hangs up comes back as data. And a round
 the validators cannot agree on records nothing at all: the host stays unchecked
 rather than being written down as a disagreement.
+
+## Where you measure from changes the answer
+
+The same 72 sites, the same method, the same day, run once from a home
+connection and once from a datacentre: **18 of them disagreed.** Amazon served
+an agent from one vantage and refused it from the other. Several sites that
+refuse a home connection outright are comparable from a datacentre, and several
+that are comparable from home refuse the datacentre before the question of
+identity ever arises.
+
+This is why runs carry a `vantage` and are never averaged together. A single
+number covering both would be true of neither, and the difference is not noise
+to be smoothed away: it is a second axis of the same behaviour, address
+reputation stacked on top of declared identity.
+
+It is also the strongest argument for `contracts/attest.py`. A validator set is
+many independent vantages at once, on machines nobody here controls. When they
+agree, the finding no longer depends on where we happened to be sitting.
