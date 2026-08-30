@@ -216,6 +216,12 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--limit", type=int)
     parser.add_argument("--workers", type=int, default=8)
+    # Where the measurement was taken from. A datacentre address and a home
+    # connection are not the same client to a site that filters on address
+    # reputation, so runs from different places are labelled and never averaged
+    # together. Confusing the two would explain a difference with the wrong
+    # cause, which is the failure this whole method exists to avoid.
+    parser.add_argument("--vantage", default=os.environ.get("SPLIT_VANTAGE", "local"))
     args = parser.parse_args()
 
     entries = load(args.limit)
@@ -233,6 +239,7 @@ def main():
 
     payload = {
         "measured_at": started.isoformat(),
+        "vantage": args.vantage,
         "finished_at": datetime.datetime.now(datetime.timezone.utc).isoformat(),
         "method": ("One homepage per site, fetched once per identity from the same machine "
                    "within seconds, changing only the client identity. Nothing bypassed, "
@@ -251,7 +258,7 @@ def main():
     }
 
     os.makedirs(RESULTS, exist_ok=True)
-    path = os.path.join(RESULTS, started.strftime("%Y-%m-%d") + ".json")
+    path = os.path.join(RESULTS, "%s-%s.json" % (started.strftime("%Y-%m-%d"), args.vantage))
     with open(path, "w", encoding="utf-8") as handle:
         json.dump(payload, handle, indent=2)
 
@@ -262,7 +269,31 @@ def main():
     print("%d serve agents a materially different page" % len(differing))
     print("%d bar named agent clients in robots.txt" % len(barring))
     print("\nwrote %s" % path)
+    index()
     return 0
+
+
+def index():
+    """A list of every run, newest first, for the page to read.
+
+    Built from the files themselves rather than kept by hand, so a run that was
+    never saved cannot appear here and a saved run cannot be quietly left out.
+    """
+    runs = []
+    for name in sorted(os.listdir(RESULTS)):
+        if not name.endswith(".json") or name == "index.json":
+            continue
+        with open(os.path.join(RESULTS, name), encoding="utf-8") as handle:
+            payload = json.load(handle)
+        runs.append({
+            "file": name,
+            "measured_at": payload.get("measured_at"),
+            "vantage": payload.get("vantage", "local"),
+            "totals": payload.get("totals", {}),
+        })
+    runs.sort(key=lambda run: run["measured_at"] or "", reverse=True)
+    with open(os.path.join(RESULTS, "index.json"), "w", encoding="utf-8") as handle:
+        json.dump({"runs": runs}, handle, indent=2)
 
 
 if __name__ == "__main__":

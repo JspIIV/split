@@ -50,6 +50,8 @@
   .controls { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; }
   button { background: var(--panel); color: var(--dim); border: 1px solid var(--line);
            border-radius: 999px; padding: 7px 15px; font-size: 13px; cursor: pointer; font-family: inherit; }
+  select { background: var(--panel); color: var(--text); border: 1px solid var(--line);
+           border-radius: 999px; padding: 7px 15px; font-size: 13px; font-family: inherit; }
   button[aria-pressed="true"] { color: var(--text); border-color: var(--faint); }
 </style>
 </head>
@@ -65,6 +67,7 @@
 
   <h2>What each site did</h2>
   <div class="controls">
+    <select id="runs" hidden aria-label="which run to show"></select>
     <button data-filter="all" aria-pressed="true">All</button>
     <button data-filter="refuses_agents" aria-pressed="false">Refused an agent</button>
     <button data-filter="serves_agents_differently" aria-pressed="false">Different page</button>
@@ -119,7 +122,7 @@ const VERDICT = {
   not_comparable: "not comparable"
 };
 
-let DATA = null, FILTER = "all";
+let DATA = null, RUNS = [], FILTER = "all";
 
 function cell(result) {
   if (!result) return '<span class="na">-</span>';
@@ -155,7 +158,8 @@ function render() {
     "<tr><td colspan='9' class='tag'>nothing in this group</td></tr>";
 
   document.getElementById("stamp").textContent =
-    "Measured " + new Date(DATA.measured_at).toISOString().slice(0, 16).replace("T", " ") + " UTC";
+    "Measured " + new Date(DATA.measured_at).toISOString().slice(0, 16).replace("T", " ") +
+    " UTC from a " + (DATA.vantage === "github" ? "datacentre" : "home") + " connection";
 }
 
 document.querySelectorAll("button[data-filter]").forEach(button => {
@@ -167,14 +171,37 @@ document.querySelectorAll("button[data-filter]").forEach(button => {
   });
 });
 
-fetch("./data.json")
+// The page reads the runs themselves rather than a copy kept beside it, so a
+// published measurement and a displayed measurement cannot drift apart.
+fetch("./results/index.json")
   .then(response => response.json())
-  .then(payload => { DATA = payload; render(); })
+  .then(list => {
+    RUNS = list.runs || [];
+    if (!RUNS.length) throw new Error("no runs");
+    buildPicker();
+    return load(RUNS[0].file);
+  })
   .catch(() => {
     document.getElementById("stats").innerHTML =
-      '<div class="stat"><span>No dataset loaded. Run <code>python measure.py</code>, ' +
-      'then copy the newest file from results/ to docs/data.json.</span></div>';
+      '<div class="stat"><span>No dataset published yet. Run <code>python measure.py</code>.</span></div>';
   });
+
+function load(file) {
+  return fetch("./results/" + file)
+    .then(response => response.json())
+    .then(payload => { DATA = payload; render(); });
+}
+
+function buildPicker() {
+  if (RUNS.length < 2) return;
+  const picker = document.getElementById("runs");
+  picker.innerHTML = RUNS.map((run, i) =>
+    '<option value="' + run.file + '">' +
+    run.measured_at.slice(0, 10) + " from " + run.vantage +
+    (i === 0 ? " (newest)" : "") + "</option>").join("");
+  picker.hidden = false;
+  picker.addEventListener("change", () => load(picker.value));
+}
 </script>
 </body>
 </html>
