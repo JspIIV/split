@@ -14,7 +14,7 @@ measurement plus every dataset it has produced.
 * `measure.py` runs it. `python measure.py`
 * `sites.txt` is the list, one host per line
 * `results/` holds every run, dated, never edited afterwards
-* `app/` is the page that reads the newest dataset
+* `docs/` is the page that reads the newest dataset
 
 ## What it does
 
@@ -81,7 +81,7 @@ python measure.py --limit 10 # a quick pass
 
 Results land in `results/<date>.json` with the full per identity detail, the
 method text, and the identities used. To point the page at the newest run, copy
-it to `app/data.json`.
+it to `docs/data.json`.
 
 Numbers move. A site that refuses an agent today may serve it next month, and
 that change is the interesting part, which is why old runs are kept rather than
