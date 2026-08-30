@@ -86,3 +86,42 @@ it to `docs/data.json`.
 Numbers move. A site that refuses an agent today may serve it next month, and
 that change is the interesting part, which is why old runs are kept rather than
 overwritten.
+
+## Taking us out of the middle
+
+The measurement above has one weakness that measuring more carefully cannot fix:
+**you have to take our word for it.** We say nike.com refuses an agent. Nike can
+answer that we made it up, or ran it wrong, and nothing in the dataset settles
+that.
+
+`contracts/attest.py` removes us. `check(host)` opens a GenLayer consensus round
+in which every validator fetches the site itself, from its own machine, twice
+and seconds apart: once saying nothing about itself, once declaring an agent
+identity. The round completes only if the validators agree on both legs.
+
+Live on GenLayer Studionet at `0x23F124bda497e32AcB84Be5F3a309A8943501F1d`.
+
+| host | silent | declared |
+|---|---|---|
+| nike.com | SERVED | **REFUSED** |
+| airbnb.com | SERVED | **REFUSED** |
+| walmart.com | SERVED | SERVED |
+
+Walmart is the control, measured the same way in the same round. The tool is not
+an accusation machine; where there is no difference it records none.
+
+**The finding this produced.** The blocking is not aimed at machines. It is aimed
+at machines that say what they are. Of the 16 sites that refuse a named agent
+identity, 5 served an unnamed script client in the same second, and the
+validators, whose HTTP client declares nothing, were served by nike.com and
+airbnb.com until the moment they declared.
+
+That is worth stating plainly, because the whole industry is currently building
+standards for agents to identify themselves honestly: **right now, honesty is
+the thing being punished.**
+
+**Two rules the round obeys.** Nothing inside the nondeterministic block reads
+storage, which ends the transaction on this network, and nothing inside it
+raises, which reverts it. A site that hangs up comes back as data. And a round
+the validators cannot agree on records nothing at all: the host stays unchecked
+rather than being written down as a disagreement.

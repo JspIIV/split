@@ -1,0 +1,12 @@
+{
+  "name": "Attest",
+  "contract": "contracts/attest.py",
+  "class": "Attest",
+  "address": "0x23F124bda497e32AcB84Be5F3a309A8943501F1d",
+  "network": "GenLayer Studionet",
+  "verified": "Three hosts attested. nike.com and airbnb.com: SERVED to a silent client and REFUSED to the same validator seconds later once it declared an agent identity, punishes_disclosure true. walmart.com: SERVED to both, the negative control in the same round.",
+  "superseded": {
+    "address": "0x5aeC14b65ad9E9062A8e6c6C1bF62B92d8EcD0F5",
+    "why": "fetched once without declaring an identity, so it measured the control leg only"
+  }
+}
