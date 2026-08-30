@@ -1,0 +1,36 @@
+32 hosts, 0 already attested
+
+  airbnb.com               SERVED -> REFUSED  PUNISHES DISCLOSURE
+  aritzia.com              REFUSED -> REFUSED
+  article.com              SERVED -> REFUSED  PUNISHES DISCLOSURE
+  boohoo.com               SERVED -> REFUSED  PUNISHES DISCLOSURE
+  costplusdrugs.com        REFUSED -> REFUSED
+  eventbrite.com           SERVED -> REFUSED  PUNISHES DISCLOSURE
+  fiverr.com               REFUSED -> REFUSED
+  goat.com                 REFUSED -> REFUSED
+  goodrx.com               REFUSED -> REFUSED
+  hawaiianairlines.com     SERVED -> REFUSED  PUNISHES DISCLOSURE
+  livenation.com           SERVED -> SERVED
+  lowes.com                SERVED -> REFUSED  PUNISHES DISCLOSURE
+  macys.com                SERVED -> REFUSED  PUNISHES DISCLOSURE
+  mango.com                REFUSED -> REFUSED
+  nike.com                 SERVED -> REFUSED  PUNISHES DISCLOSURE
+  petsmart.com             SERVED -> REFUSED  PUNISHES DISCLOSURE
+  prettylittlething.com    SERVED -> REFUSED  PUNISHES DISCLOSURE
+  priceline.com            SERVED -> SERVED
+  qvc.com                  REFUSED -> REFUSED
+  sephora.com              SERVED -> REFUSED  PUNISHES DISCLOSURE
+  ssense.com               SERVED -> SERVED
+  tripadvisor.com          REFUSED -> SERVED
+  trivago.com              REFUSED -> SERVED
+  trulia.com               SERVED -> REFUSED  PUNISHES DISCLOSURE
+  turo.com                 REFUSED -> REFUSED
+  ubereats.com             REFUSED -> REFUSED
+  uniqlo.com               REFUSED -> UNREACHABLE
+  walgreens.com            SERVED -> REFUSED  PUNISHES DISCLOSURE
+  wizzair.com              REFUSED -> REFUSED
+  zara.com                 REFUSED -> REFUSED
+  zillow.com               SERVED -> REFUSED  PUNISHES DISCLOSURE
+  ziprecruiter.com         SERVED -> SERVED
+
+32 attested, 14 served the silent client and refused the declared one

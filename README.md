@@ -164,3 +164,25 @@ well behaved agent loses at both ends: turned away where no notice was given,
 and staying out where the door was open. Any standard built on agents declaring
 themselves and respecting published policy has to reckon with that, because
 right now neither half of the bargain is being kept on the other side.
+
+## What the network confirmed, and what it did not
+
+All 32 hosts the 2026-08-30 run found refusing an agent were put to the
+validators, one round each, no failures. What came back:
+
+| | |
+|---|---|
+| **14** | served the silent validator and refused it once it declared. Our finding, reproduced by machines we do not control |
+| **11** | refused the validators before identity ever came up |
+| **4** | served the validators both ways, so from that vantage there was nothing to see |
+| 3 | other combinations, in `results/attestations.json` |
+
+The last two rows stay in the record rather than being trimmed out. A site that
+refuses a home connection and serves a datacentre is not contradicting us, it is
+filtering on something other than identity, and the same day's two vantage runs
+disagreed on 18 of 72 sites for the same reason.
+
+So the honest reading is narrower than the headline and stronger than an
+assertion: **on 14 named sites, an independent validator set was let in while
+silent and turned away the moment it said what it was.** That is on chain, with
+the transaction for each, and nobody has to take our word for it.

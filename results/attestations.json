@@ -1,0 +1,519 @@
+{
+  "contract": "0x23F124bda497e32AcB84Be5F3a309A8943501F1d",
+  "network": "GenLayer Studionet",
+  "attestations": [
+    {
+      "host": "airbnb.com",
+      "tx": "0x1dd367de699ee0596540c50a16400ab60bfae367b7894501e43cdd28344662de",
+      "votes": [
+        "idle",
+        "agree",
+        "agree",
+        "idle"
+      ],
+      "execution": "SUCCESS",
+      "ok": true,
+      "index": 3,
+      "quiet": "SERVED",
+      "declared": "REFUSED",
+      "punishes_disclosure": true
+    },
+    {
+      "host": "aritzia.com",
+      "tx": "0xeedd2a08f93c124627ee2be3ba7c135815155ef6315b4899bfcc69191481581a",
+      "votes": [
+        "idle",
+        "agree",
+        "agree",
+        "agree"
+      ],
+      "execution": "SUCCESS",
+      "ok": true,
+      "index": 4,
+      "quiet": "REFUSED",
+      "declared": "REFUSED",
+      "punishes_disclosure": false
+    },
+    {
+      "host": "article.com",
+      "tx": "0x69e65d296279d62820421a72e8dc36cbd75948877d54db4f3f051b5aea2d6091",
+      "votes": [
+        "agree",
+        "idle",
+        "idle",
+        "agree"
+      ],
+      "execution": "SUCCESS",
+      "ok": true,
+      "index": 5,
+      "quiet": "SERVED",
+      "declared": "REFUSED",
+      "punishes_disclosure": true
+    },
+    {
+      "host": "boohoo.com",
+      "tx": "0x624af6acb1389985c738cff0f1ecdfae552f8a3721f70c519d139dc717521bae",
+      "votes": [
+        "idle",
+        "agree",
+        "agree",
+        "agree"
+      ],
+      "execution": "SUCCESS",
+      "ok": true,
+      "index": 6,
+      "quiet": "SERVED",
+      "declared": "REFUSED",
+      "punishes_disclosure": true
+    },
+    {
+      "host": "costplusdrugs.com",
+      "tx": "0xa3140f35eb1ca524e2ff688b5b30d178a4f6e4b602c0e4af9bd6d77d2b965b25",
+      "votes": [
+        "idle",
+        "agree",
+        "agree",
+        "agree"
+      ],
+      "execution": "SUCCESS",
+      "ok": true,
+      "index": 7,
+      "quiet": "REFUSED",
+      "declared": "REFUSED",
+      "punishes_disclosure": false
+    },
+    {
+      "host": "eventbrite.com",
+      "tx": "0x0c851189c0ade597c266b7fe4f0a97f7523ad39cd490a6dd5f8c6cbe69746561",
+      "votes": [
+        "idle",
+        "agree",
+        "idle",
+        "agree"
+      ],
+      "execution": "SUCCESS",
+      "ok": true,
+      "index": 8,
+      "quiet": "SERVED",
+      "declared": "REFUSED",
+      "punishes_disclosure": true
+    },
+    {
+      "host": "fiverr.com",
+      "tx": "0xd6a2609cd65be2017e63d3501a95ff79c07516d4688ea1c629b42e8814524fea",
+      "votes": [
+        "agree",
+        "idle",
+        "idle",
+        "agree"
+      ],
+      "execution": "SUCCESS",
+      "ok": true,
+      "index": 9,
+      "quiet": "REFUSED",
+      "declared": "REFUSED",
+      "punishes_disclosure": false
+    },
+    {
+      "host": "goat.com",
+      "tx": "0x5afc3d502d918d4615cc5209ad5951758b4eb67ec1afa5d62e03df1e14693814",
+      "votes": [
+        "agree",
+        "idle",
+        "idle",
+        "agree"
+      ],
+      "execution": "SUCCESS",
+      "ok": true,
+      "index": 10,
+      "quiet": "REFUSED",
+      "declared": "REFUSED",
+      "punishes_disclosure": false
+    },
+    {
+      "host": "goodrx.com",
+      "tx": "0xb3abfa7491888a19c974d38ca0f4e33eb3d1d80676ebeb070c88cf3aae6ee91d",
+      "votes": [
+        "agree",
+        "idle",
+        "agree",
+        "agree"
+      ],
+      "execution": "SUCCESS",
+      "ok": true,
+      "index": 11,
+      "quiet": "REFUSED",
+      "declared": "REFUSED",
+      "punishes_disclosure": false
+    },
+    {
+      "host": "hawaiianairlines.com",
+      "tx": "0xd97efa5a680f3b8724f61a2fd4e2846be192d7868165c165ee9fcd87780782dc",
+      "votes": [
+        "idle",
+        "agree",
+        "agree",
+        "agree"
+      ],
+      "execution": "SUCCESS",
+      "ok": true,
+      "index": 12,
+      "quiet": "SERVED",
+      "declared": "REFUSED",
+      "punishes_disclosure": true
+    },
+    {
+      "host": "livenation.com",
+      "tx": "0x4fee5851786bb1697f803eec39c41e4a128d8fae183471779387da8aa94cbda5",
+      "votes": [
+        "idle",
+        "agree",
+        "agree",
+        "agree"
+      ],
+      "execution": "SUCCESS",
+      "ok": true,
+      "index": 13,
+      "quiet": "SERVED",
+      "declared": "SERVED",
+      "punishes_disclosure": false
+    },
+    {
+      "host": "lowes.com",
+      "tx": "0x5308b5d2cb94a46efe3c3dcdc1977319de9c8f997f6f049af1501bf7bb7efcb6",
+      "votes": [
+        "agree",
+        "idle",
+        "idle",
+        "agree"
+      ],
+      "execution": "SUCCESS",
+      "ok": true,
+      "index": 14,
+      "quiet": "SERVED",
+      "declared": "REFUSED",
+      "punishes_disclosure": true
+    },
+    {
+      "host": "macys.com",
+      "tx": "0x6a7d4d84998a88934469be1c0e469350ab2d1f6267fc7d541fd1a80bac165ad1",
+      "votes": [
+        "agree",
+        "agree",
+        "idle",
+        "idle"
+      ],
+      "execution": "SUCCESS",
+      "ok": true,
+      "index": 15,
+      "quiet": "SERVED",
+      "declared": "REFUSED",
+      "punishes_disclosure": true
+    },
+    {
+      "host": "mango.com",
+      "tx": "0x33da58030a60681a6d86a8e12731b70ac369a7022267102f39584cd2d3f0add7",
+      "votes": [
+        "idle",
+        "agree",
+        "idle",
+        "agree"
+      ],
+      "execution": "SUCCESS",
+      "ok": true,
+      "index": 16,
+      "quiet": "REFUSED",
+      "declared": "REFUSED",
+      "punishes_disclosure": false
+    },
+    {
+      "host": "nike.com",
+      "tx": "0x748ee4fe88969d5baaee2323d487b445e7229215980705e12cecee681da0fbb9",
+      "votes": [
+        "idle",
+        "idle",
+        "agree",
+        "agree"
+      ],
+      "execution": "SUCCESS",
+      "ok": true,
+      "index": 17,
+      "quiet": "SERVED",
+      "declared": "REFUSED",
+      "punishes_disclosure": true
+    },
+    {
+      "host": "petsmart.com",
+      "tx": "0x36b629677b53fe8d2e43c8c03b4553f6831eea7613ede0f58d105c5af6ece7f2",
+      "votes": [
+        "idle",
+        "agree",
+        "agree",
+        "agree"
+      ],
+      "execution": "SUCCESS",
+      "ok": true,
+      "index": 18,
+      "quiet": "SERVED",
+      "declared": "REFUSED",
+      "punishes_disclosure": true
+    },
+    {
+      "host": "prettylittlething.com",
+      "tx": "0x3982c4d57e055ba138b0b514716f007ce288109cb874d1dd4c0ee858274c5b5a",
+      "votes": [
+        "idle",
+        "idle",
+        "agree",
+        "agree"
+      ],
+      "execution": "SUCCESS",
+      "ok": true,
+      "index": 19,
+      "quiet": "SERVED",
+      "declared": "REFUSED",
+      "punishes_disclosure": true
+    },
+    {
+      "host": "priceline.com",
+      "tx": "0xcdd2597b6c845fc5c8fe0d9d750ba57d85c4020e0a88116d6e76f14f1bb02a3e",
+      "votes": [
+        "agree",
+        "idle",
+        "agree",
+        "agree"
+      ],
+      "execution": "SUCCESS",
+      "ok": true,
+      "index": 20,
+      "quiet": "SERVED",
+      "declared": "SERVED",
+      "punishes_disclosure": false
+    },
+    {
+      "host": "qvc.com",
+      "tx": "0x66969a0b28fa75adb12c761a09e45ba6c1a56212d41c09d9fbc0040974840a67",
+      "votes": [
+        "idle",
+        "agree",
+        "agree",
+        "agree"
+      ],
+      "execution": "SUCCESS",
+      "ok": true,
+      "index": 21,
+      "quiet": "REFUSED",
+      "declared": "REFUSED",
+      "punishes_disclosure": false
+    },
+    {
+      "host": "sephora.com",
+      "tx": "0xb8487c1a6da1c7713eee23c02d7f31549e4aadd3876c1ac0517afe182792652e",
+      "votes": [
+        "idle",
+        "agree",
+        "agree",
+        "idle"
+      ],
+      "execution": "SUCCESS",
+      "ok": true,
+      "index": 22,
+      "quiet": "SERVED",
+      "declared": "REFUSED",
+      "punishes_disclosure": true
+    },
+    {
+      "host": "ssense.com",
+      "tx": "0x5e913740604a23d9538ab826f419b123fca996a95401d021fe1ed6ac5332a443",
+      "votes": [
+        "idle",
+        "agree",
+        "agree",
+        "agree"
+      ],
+      "execution": "SUCCESS",
+      "ok": true,
+      "index": 23,
+      "quiet": "SERVED",
+      "declared": "SERVED",
+      "punishes_disclosure": false
+    },
+    {
+      "host": "tripadvisor.com",
+      "tx": "0xc577ade11b28851ed8415be4c526995df6b6b5fcbe6a3f822a77b6e9aae89db6",
+      "votes": [
+        "agree",
+        "idle",
+        "agree",
+        "agree"
+      ],
+      "execution": "SUCCESS",
+      "ok": true,
+      "index": 24,
+      "quiet": "REFUSED",
+      "declared": "SERVED",
+      "punishes_disclosure": false
+    },
+    {
+      "host": "trivago.com",
+      "tx": "0x08356f730ac0538f613c145aadae93aeff2486e3264ccc701a74bc9e6a415800",
+      "votes": [
+        "agree",
+        "idle",
+        "agree",
+        "idle"
+      ],
+      "execution": "SUCCESS",
+      "ok": true,
+      "index": 25,
+      "quiet": "REFUSED",
+      "declared": "SERVED",
+      "punishes_disclosure": false
+    },
+    {
+      "host": "trulia.com",
+      "tx": "0x47a5baadf879aff6b175a1855079fbbdb20692ff159a1825779c8071aef303a3",
+      "votes": [
+        "agree",
+        "idle",
+        "agree",
+        "idle"
+      ],
+      "execution": "SUCCESS",
+      "ok": true,
+      "index": 26,
+      "quiet": "SERVED",
+      "declared": "REFUSED",
+      "punishes_disclosure": true
+    },
+    {
+      "host": "turo.com",
+      "tx": "0x4173ca15a88f23ac522117ca044930340c929b9a6ee217bae4e65c6f0c0a2309",
+      "votes": [
+        "agree",
+        "idle",
+        "agree",
+        "idle"
+      ],
+      "execution": "SUCCESS",
+      "ok": true,
+      "index": 27,
+      "quiet": "REFUSED",
+      "declared": "REFUSED",
+      "punishes_disclosure": false
+    },
+    {
+      "host": "ubereats.com",
+      "tx": "0x66ec9bc52580f11f8acfe7c81afc52933412b3d49a71f5f332710ff64710cca2",
+      "votes": [
+        "agree",
+        "agree",
+        "agree",
+        "agree"
+      ],
+      "execution": "SUCCESS",
+      "ok": true,
+      "index": 28,
+      "quiet": "REFUSED",
+      "declared": "REFUSED",
+      "punishes_disclosure": false
+    },
+    {
+      "host": "uniqlo.com",
+      "tx": "0xc3f705a1ac1260fbd8d9ab4cf44a71af813d226d2b02258648a545161a24fdba",
+      "votes": [
+        "idle",
+        "agree",
+        "agree",
+        "idle"
+      ],
+      "execution": "SUCCESS",
+      "ok": true,
+      "index": 29,
+      "quiet": "REFUSED",
+      "declared": "UNREACHABLE",
+      "punishes_disclosure": false
+    },
+    {
+      "host": "walgreens.com",
+      "tx": "0xa1fcec3d38b9414b15bd0bc46688f4113e2ad04c65186df2fbf34ab73f6c1c3f",
+      "votes": [
+        "idle",
+        "agree",
+        "agree",
+        "idle"
+      ],
+      "execution": "SUCCESS",
+      "ok": true,
+      "index": 30,
+      "quiet": "SERVED",
+      "declared": "REFUSED",
+      "punishes_disclosure": true
+    },
+    {
+      "host": "wizzair.com",
+      "tx": "0x1caa954c997ba7f8eab993cc85333992310828526e3bdcb65e02db6efefe9071",
+      "votes": [
+        "idle",
+        "agree",
+        "agree",
+        "agree"
+      ],
+      "execution": "SUCCESS",
+      "ok": true,
+      "index": 31,
+      "quiet": "REFUSED",
+      "declared": "REFUSED",
+      "punishes_disclosure": false
+    },
+    {
+      "host": "zara.com",
+      "tx": "0x3f62433ab71404a8288793aeaa8fb5d0e0d773b1575edcc54209a7a884ea7281",
+      "votes": [
+        "idle",
+        "idle",
+        "agree",
+        "agree"
+      ],
+      "execution": "SUCCESS",
+      "ok": true,
+      "index": 32,
+      "quiet": "REFUSED",
+      "declared": "REFUSED",
+      "punishes_disclosure": false
+    },
+    {
+      "host": "zillow.com",
+      "tx": "0x8e878d5211e4d80957298fef6d6d178112b49cffdf17eea9bc6c1b24f7dbb0fe",
+      "votes": [
+        "agree",
+        "idle",
+        "agree",
+        "agree"
+      ],
+      "execution": "SUCCESS",
+      "ok": true,
+      "index": 33,
+      "quiet": "SERVED",
+      "declared": "REFUSED",
+      "punishes_disclosure": true
+    },
+    {
+      "host": "ziprecruiter.com",
+      "tx": "0x5324717629a758de2a53524f1abfa05b891fef5827f0beec506915fefb89272b",
+      "votes": [
+        "idle",
+        "agree",
+        "agree",
+        "idle"
+      ],
+      "execution": "SUCCESS",
+      "ok": true,
+      "index": 34,
+      "quiet": "SERVED",
+      "declared": "SERVED",
+      "punishes_disclosure": false
+    }
+  ],
+  "attested_at": "2026-08-30T11:18:47.274Z"
+}

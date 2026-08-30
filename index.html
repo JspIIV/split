@@ -79,6 +79,15 @@
     <tbody id="rows"></tbody>
   </table></div>
 
+  <h2>Not our word for it</h2>
+  <p id="chainline">Everything above is our measurement, taken from one machine,
+  which means you have to take our word for it.</p>
+  <p>So the same question is put to a network that has no stake in the answer.
+  Every validator fetches the site itself, twice and seconds apart, once saying
+  nothing about itself and once declaring an agent identity. The round completes
+  only if they agree on both. What lands on chain is what the site did to
+  independent clients, not what anybody reported.</p>
+
   <h2>The notice nobody gives</h2>
   <p>robots.txt is the channel a site already has for telling machines no. It is
   public, machine readable, and free to read before knocking, and the entire
@@ -138,13 +147,22 @@ const VERDICT = {
   not_comparable: "not comparable"
 };
 
-let DATA = null, RUNS = [], FILTER = "all";
+let DATA = null, RUNS = [], FILTER = "all", CHAIN = {};
 
 function cell(result) {
   if (!result) return '<span class="na">-</span>';
   const s = result.status;
   const cls = s === 0 ? "no" : (s >= 200 && s < 400) ? "ok" : "no";
   return '<span class="code ' + cls + '">' + (s === 0 ? "dropped" : s) + "</span>";
+}
+
+function attested(host) {
+  const a = CHAIN[host];
+  if (!a) return "-";
+  const verdict = a.punishes_disclosure
+    ? '<span class="no">served until it said what it was</span>'
+    : '<span class="na">' + a.quiet.toLowerCase() + " then " + a.declared.toLowerCase() + "</span>";
+  return '<a href="https://explorer-studio.genlayer.com/tx/' + a.tx + '">' + verdict + "</a>";
 }
 
 function render() {
@@ -164,7 +182,7 @@ function render() {
 
   document.getElementById("head").innerHTML =
     "<th>site</th>" + IDS.map(i => "<th>" + LABEL[i] + "</th>").join("") +
-    "<th>verdict</th><th>robots.txt</th>";
+    "<th>verdict</th><th>robots.txt</th><th>the network says</th>";
 
   const rows = DATA.sites.filter(s => FILTER === "all" || s.verdict === FILTER);
   document.getElementById("rows").innerHTML = rows.map(site =>
@@ -172,8 +190,8 @@ function render() {
     IDS.map(i => "<td>" + cell(site.identities[i]) + "</td>").join("") +
     "<td class='tag'>" + (VERDICT[site.verdict] || site.verdict) + "</td>" +
     "<td class='tag'>" + (site.robots.blocked.length ? site.robots.blocked.join(", ") : "-") +
-    "</td></tr>").join("") ||
-    "<tr><td colspan='9' class='tag'>nothing in this group</td></tr>";
+    "</td><td class='tag'>" + attested(site.host) + "</td></tr>").join("") ||
+    "<tr><td colspan='10' class='tag'>nothing in this group</td></tr>";
 
   document.getElementById("stamp").textContent =
     "Measured " + new Date(DATA.measured_at).toISOString().slice(0, 16).replace("T", " ") +
@@ -203,6 +221,26 @@ fetch("./results/index.json")
     document.getElementById("stats").innerHTML =
       '<div class="stat"><span>No dataset published yet. Run <code>python measure.py</code>.</span></div>';
   });
+
+// Attestations are loaded separately and may cover only part of a run. A site
+// with no attestation shows nothing rather than showing our own reading dressed
+// up as the network's.
+fetch("./results/attestations.json")
+  .then(response => response.json())
+  .then(payload => {
+    (payload.attestations || []).filter(a => a.ok).forEach(a => { CHAIN[a.host] = a; });
+    const count = Object.keys(CHAIN).length;
+    if (count) {
+      document.getElementById("chainline").innerHTML =
+        count + " of these were checked by the GenLayer validators themselves, each " +
+        "fetching the site twice from its own machine, silent and then declaring an " +
+        'agent identity, under <a href="https://explorer-studio.genlayer.com/address/' +
+        payload.contract + '">one contract</a>. Where the last column is filled in, ' +
+        "the finding is not ours.";
+    }
+    if (DATA) render();
+  })
+  .catch(() => {});
 
 function load(file) {
   return fetch("./results/" + file)
