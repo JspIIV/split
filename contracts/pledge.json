@@ -1,0 +1,9 @@
+{
+  "name": "Pledge",
+  "contract": "contracts/pledge.py",
+  "class": "Pledge",
+  "address": "0xA515B1A40Ed028539426517439EfCf985abe6520",
+  "network": "GenLayer Studionet",
+  "verified": "Two pledges of 0.01 GEN each, two claims from a second account. nike.com: validators served the silent knock and were refused the declared one, claim upheld, 0.002 GEN paid to the claimant. walmart.com: served both ways, claim rejected, nothing paid.",
+  "note": "Value moves on Studionet. On testnet-asimov emit_transfer records a payout and leaves balances untouched, so a contract whose point is that money moves lives here."
+}

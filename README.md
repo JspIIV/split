@@ -186,3 +186,49 @@ So the honest reading is narrower than the headline and stronger than an
 assertion: **on 14 named sites, an independent validator set was let in while
 silent and turned away the moment it said what it was.** That is on chain, with
 the transaction for each, and nobody has to take our word for it.
+
+## Pledge: the same promise, with money behind it
+
+Measuring the gap is one thing. `contracts/pledge.py` closes it.
+
+A site publishes what it promises about agent access and leaves collateral
+behind it. Anyone turned away calls `claim`. Neither side supplies evidence,
+because evidence from either side would be worthless: the validators go and
+knock themselves, twice and seconds apart, silent and then declaring an agent
+identity. If the door opened for the silent knock and shut for the declared one,
+the promise was not kept and the collateral pays the person who was refused.
+
+Live on GenLayer Studionet at `0xA515B1A40Ed028539426517439EfCf985abe6520`, run
+against two real sites (`demo_pledge.log` is the transcript):
+
+| domain | silent | declared | claim | paid |
+|---|---|---|---|---|
+| nike.com | SERVED | REFUSED | **upheld** | 0.002 GEN to the claimant |
+| walmart.com | SERVED | SERVED | rejected | nothing |
+
+Walmart is the control. The same promise, the same claim, the same round, and
+the contract refuses to pay because nothing was broken.
+
+**What counts as broken is narrow on purpose.** A site that is down, or that
+refuses everybody, refuses both knocks and owes nothing. Only opening for a
+silent client and shutting for one that says what it is breaks this particular
+promise, which is the only thing the site promised.
+
+**Four rules money forces**, each from something that has gone wrong before. A
+payable method never raises, because raising reverts the record and keeps the
+value: every refused deposit here is paid straight back. A failed round pays
+nobody, in either direction. Nothing inside the block reads storage or raises.
+And one address is paid once per domain, or a single refusal would drain the
+collateral by being reported in a loop.
+
+`python contracts/tests/pledge_rules.py` puts 22 checks through `pledge`,
+`claim` and `close` on a real instance, including every way of not paying:
+promise kept, site down, site shut to everyone, site unreachable, a second claim
+from a paid address, the owner claiming against itself, an early withdrawal, and
+a payout larger than the collateral.
+
+One of those tests exists because of a bug this repository shipped for an hour:
+`gl.evm.contract_interface` is a decorator, not a call. Written the wrong way,
+the contract deployed cleanly, accepted collateral, and answered every claim
+correctly except the one path that pays somebody, which came back empty. The
+stub in the test now models the decorator, so that shape cannot pass again.

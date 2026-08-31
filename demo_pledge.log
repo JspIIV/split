@@ -1,0 +1,11 @@
+deployed 0xA515B1A40Ed028539426517439EfCf985abe6520 
+
+nike.com
+  pledge {"ok":true,"domain":"nike.com","collateral":"10000000000000000","expires_at_epoch":1788159791}
+  claim  {"ok":true,"domain":"nike.com","quiet":"SERVED","declared":"REFUSED","upheld":true,"paid":"2000000000000000","claim":0}
+
+walmart.com
+  pledge {"ok":true,"domain":"walmart.com","collateral":"10000000000000000","expires_at_epoch":1788159887}
+  claim  {"ok":true,"domain":"walmart.com","quiet":"SERVED","declared":"SERVED","upheld":false,"paid":"0","claim":1}
+
+board "{\"pledges\": 2, \"claims\": 2, \"claims_upheld\": 1, \"note\": \"a claim is settled by the validators knocking on the door themselves, twice, silent and then declaring; neither party supplies evidence\"}"
