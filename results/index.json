@@ -1,6 +1,20 @@
 {
   "runs": [
     {
+      "file": "2026-08-31-github.json",
+      "measured_at": "2026-08-31T13:59:08.913793+00:00",
+      "vantage": "github",
+      "totals": {
+        "sites": 230,
+        "comparable": 113,
+        "refuses_agents": 23,
+        "serves_agents_differently": 15,
+        "robots_bars_named_agents": 13,
+        "refuses_without_notice": 23,
+        "said_no_but_serves": 4
+      }
+    },
+    {
       "file": "2026-08-30-local.json",
       "measured_at": "2026-08-30T10:30:26.265112+00:00",
       "vantage": "local",
@@ -25,6 +39,12 @@
         "serves_agents_differently": 7,
         "robots_bars_named_agents": 7
       }
+    },
+    {
+      "file": "attestations.json",
+      "measured_at": null,
+      "vantage": "local",
+      "totals": {}
     }
   ]
 }
