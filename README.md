@@ -198,8 +198,8 @@ knock themselves, twice and seconds apart, silent and then declaring an agent
 identity. If the door opened for the silent knock and shut for the declared one,
 the promise was not kept and the collateral pays the person who was refused.
 
-Live on GenLayer Studionet at `0xA515B1A40Ed028539426517439EfCf985abe6520`, run
-against two real sites (`demo_pledge.log` is the transcript):
+Live on GenLayer Studionet at `0x9fC4B5d6cb9E1260c8dA495B03F8b5638339cD7F`
+(`demo_pledge.log` is the transcript):
 
 | domain | silent | declared | claim | paid |
 |---|---|---|---|---|
@@ -232,3 +232,48 @@ One of those tests exists because of a bug this repository shipped for an hour:
 the contract deployed cleanly, accepted collateral, and answered every claim
 correctly except the one path that pays somebody, which came back empty. The
 stub in the test now models the decorator, so that shape cannot pass again.
+
+## Three holes a steward found
+
+**Anybody could pledge anybody's domain.** Our own first demo pledged nike.com,
+which we do not own. A board of promises where the promise may not be the site's
+own is a board of rumours.
+
+A pledge now needs proof of control. The owner publishes its address at
+`https://<domain>/.well-known/split-pledge.txt`, calls `verify`, and every
+validator fetches that file itself under `strict_eq`. The comparison is against
+the whole trimmed body, not a substring, because a file that merely mentions an
+address in a sentence is not a domain vouching for it. Proof expires after
+thirty days, since domains change hands.
+
+**The claimant chose the payout.** A claim named its own bounty, so one refusal
+could ask for the whole collateral. The payout per upheld claim is fixed by the
+pledge, by the party putting up the money, and `claim` now takes nothing but a
+domain.
+
+**Rotating addresses.** One address could be paid once per domain, so a single
+refusal reported from twenty addresses emptied the collateral twenty times.
+Payouts are capped inside an observation window, by count and by value. Past the
+cap a claim is still recorded as upheld and pays nothing, because the finding is
+true whether or not there is budget left for it.
+
+Shown on chain at the address above:
+
+```
+pledge nike.com     {"ok":false,"error":"prove control of that domain first ..."}
+verify              {"ok":true,"controller":"0x8051...6258","good_for_seconds":2592000}
+pledge              {"ok":true,"payout_each":"2000000000000000","window_seconds":3600,
+                     "max_claims_per_window":3}
+claim, by another   {"ok":true,"quiet":"SERVED","declared":"SERVED","upheld":false,"paid":"0"}
+```
+
+**A fourth thing, found while fixing those.** The contract knocked at
+`https://www.<domain>/`, so the first run of this demo came back
+`UNREACHABLE` on both legs: `www.jspiiv.github.io` does not exist. It now knocks
+at the domain as pledged, which is the host the promise was actually made about.
+
+`python contracts/tests/pledge_rules.py` is now 35 checks through `verify`,
+`pledge`, `claim` and `close`, including a pledge without proof, a proof file
+naming somebody else, an address merely mentioned in a sentence, a stale proof,
+six rotating addresses against a window that allows three, and a capped claim
+that is recorded and pays nothing.

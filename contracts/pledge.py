@@ -1,49 +1,68 @@
 # { "Depends": "py-genlayer:1jb45aa8ynh2a9c9xn3b7qqh8sm5q93hwfp7jqmwsfhh8jpz09h6" }
 """Pledge: a promise about agent access, with money behind it.
 
-Today a site can say it welcomes agents and the sentence costs nothing. We
-measured 230 of them: of the 32 that refuse an agent outright, not one says so
-in robots.txt, and four bar agents there and serve them anyway. The published
-position and the behaviour at the door are not connected, because nothing
+A site can say it welcomes agents and the sentence costs nothing. We measured
+230 of them for a sibling project: of the 32 that refuse an agent outright, not
+one says so in robots.txt, and four bar agents there and serve them anyway. What
+a site publishes and what it does at the door are not connected, because nothing
 connects them.
 
-This connects them. A site publishes its promise here and leaves collateral
-behind it. Anyone turned away calls `claim`, the validators go and knock
-themselves, and if the promise is not being kept the collateral pays the person
-who was refused. The site can withdraw its collateral once the term is over,
-which is what makes leaving it there a real statement rather than a slogan.
+Here the site publishes its promise, proves the domain is its own, and leaves
+collateral behind it. Anyone turned away claims, the validators go and knock
+themselves, and if the promise is not kept the collateral pays the person who
+was refused.
+
+Three things a steward found, and what they cost
+------------------------------------------------
+
+The first version of this contract let **anybody pledge anybody's domain.** Our
+own demo pledged nike.com, which we do not own. That is not a small hole: a
+board of promises where the promise may not be the site's own is a board of
+rumours, and the collateral would have been ours to lose on somebody else's
+behalf.
+
+So a pledge now requires proof of control. The owner publishes its address at
+`https://<domain>/.well-known/split-pledge.txt` and calls `verify`, where every
+validator fetches that file itself and they must agree on the text. Only the
+address the domain vouches for can pledge it. Proof expires, because domains
+change hands.
+
+The second: **the claimant chose the payout.** A claim named its own bounty, so
+one refusal could ask for the whole collateral. The payout is now fixed by the
+pledge when it is opened, and a claim cannot ask for anything.
+
+The third, and the one that made the first two worse: **rotating addresses.**
+One address could be paid once per domain, so a single refusal reported from
+twenty addresses emptied the collateral twenty times over. Payouts are now
+capped inside an observation window, by count and by value. Past the cap the
+claim is recorded as upheld and pays nothing, because the finding is still true
+even when the budget for it is spent.
 
 Why the validators are the right witnesses
 ------------------------------------------
 
-Neither side can be trusted with the evidence here. The site would report itself
-served; the claimant would report itself refused. So neither reports anything.
-Every validator fetches the site itself, twice and seconds apart: once saying
-nothing, once declaring an agent identity. Both legs must match across
+Neither side can be trusted with the evidence. The site would report itself
+serving; the claimant would report being refused. So neither reports anything.
+Every validator fetches the site itself, twice and seconds apart, once saying
+nothing and once declaring an agent identity. Both legs must agree across
 validators or the round records nothing.
 
-That pair is the whole test, and it is fair to the site in a way a single fetch
-would not be. A site that is simply down, or that refuses everyone, refuses both
-legs and breaks no promise. Only the site that opens for a silent client and
-shuts for a declared one has done the specific thing it promised not to do.
+That pair is fair to the site in a way a single fetch would not be. A site that
+is down, or that refuses everyone, refuses both legs and breaks no promise. Only
+opening for a silent client and shutting for a declared one is the thing it
+promised not to do.
 
-The four rules money forces
----------------------------
+The rules money forces
+----------------------
 
-**A payable method never raises.** Raising out of one reverts the state and
-keeps the value: measured elsewhere, a refused deposit left the caller poorer
-and the contract heavier. Every guard here refuses by paying the value back.
+**A payable method never raises.** Raising reverts the state and keeps the
+value. Every guard here refuses by paying the value back.
 
-**A failed round pays nobody.** No default, no benefit of the doubt in either
-direction. The claim can be made again.
+**A failed round pays nobody**, in either direction.
 
 **Nothing inside the block reads storage or raises.** On chain id 4221 a round
 touching `self.<field>` from inside ends FINISHED_WITH_ERROR, and a throw there
 reverts the whole transaction rather than the round.
-
-**One claim, one payout, one claimant per address.** An address that has already
-been paid for a domain cannot be paid again for it, or a single refusal would
-drain the collateral by being reported in a loop.
 """
 
 from genlayer import *
@@ -65,12 +84,25 @@ MAX_DOMAIN = 100
 MAX_PROMISE = 1000
 
 MIN_TERM = 60
-MAX_TERM = 365 * 24 * 60 * 60
+MAX_TERM = 90 * 24 * 60 * 60
 DEFAULT_TERM = 30 * 24 * 60 * 60
 
-# What the second fetch declares itself to be: an agent fetching one page because
-# a person just asked. The promise is about this client, so this is the client
-# the network knocks with.
+# How long a proof of control stands before it has to be shown again. Domains
+# change hands, and a permanent proof would let yesterday's owner keep speaking
+# for a site it no longer runs.
+PROOF_TTL = 30 * 24 * 60 * 60
+
+# The observation window, and what a domain can lose inside one. Both caps
+# exist because addresses are free: without them one refusal reported from
+# twenty addresses drains the collateral twenty times over.
+DEFAULT_WINDOW = 24 * 60 * 60
+MIN_WINDOW = 60
+MAX_WINDOW = 30 * 24 * 60 * 60
+MAX_CLAIMS_PER_WINDOW = 3
+
+# Where the domain vouches for an address.
+PROOF_PATH = "/.well-known/split-pledge.txt"
+
 DECLARED_AGENT = ("Mozilla/5.0 AppleWebKit/537.36 (KHTML, like Gecko); compatible; "
                   "ChatGPT-User/1.0; +https://openai.com/bot")
 
@@ -93,8 +125,6 @@ def _now_iso() -> str:
 
 
 def _now_epoch() -> int:
-    """Deterministic here: every validator sees the same transaction timestamp,
-    so a deadline costs no agreement."""
     return int(datetime.now(timezone.utc).timestamp())
 
 
@@ -103,12 +133,7 @@ def _addr(address) -> str:
 
 
 def _domain(value: str) -> str:
-    """A bare hostname, or the empty string.
-
-    Strict on purpose. If a full URL were accepted, a site could pledge for one
-    path and be judged on another, and two people could pledge what they think
-    is the same domain and get two records.
-    """
+    """A bare hostname, or the empty string."""
     text = str(value).strip().lower()
     for prefix in ("https://", "http://"):
         if text.startswith(prefix):
@@ -122,13 +147,13 @@ def _domain(value: str) -> str:
     return text
 
 
-def _term(value, fallback: int) -> int:
-    """Clamped, never raising: this is reached from a payable method."""
+def _clamp(value, low: int, high: int, fallback: int) -> int:
+    """Never raises: reached from a payable method, where raising strands money."""
     try:
-        seconds = int(str(value).strip())
+        number = int(str(value).strip())
     except Exception:
         return fallback
-    return max(MIN_TERM, min(MAX_TERM, seconds))
+    return max(low, min(high, number))
 
 
 def _outcome(status: int) -> str:
@@ -140,50 +165,113 @@ def _outcome(status: int) -> str:
 
 
 class Pledge(gl.Contract):
-    # One entry per domain, and the domain is the key because the promise is
-    # about the domain. A second pledge for the same domain tops up the
+    # Who a domain has vouched for, and when it last said so.
+    controllers: TreeMap[str, str]
+
+    # One entry per domain. A second pledge for the same domain tops up the
     # collateral rather than creating a rival promise, so a claimant never has
     # to work out which of two promises applies to them.
     pledges: TreeMap[str, str]
     domains: DynArray[str]
 
-    # Every claim ever made, upheld or not. Append only: a claim that failed is
-    # part of the record, because a promise nobody could break is worth knowing
-    # about too.
+    # Every claim ever made, upheld or not, paid or capped. Append only: a claim
+    # that failed is part of the record, and so is one that was true and arrived
+    # after the budget for the window was spent.
     claims: DynArray[str]
 
     def __init__(self) -> None:
         pass
 
+    # ------------------------------------------------------------------ proof
+
+    @gl.public.write
+    def verify(self, domain: str) -> str:
+        """Prove the caller controls this domain.
+
+        The caller publishes its own address, on its own site, at a path nobody
+        else can write to, and the validators read it themselves. Nothing here
+        is taken on trust: not the caller's claim, and not ours.
+        """
+        name = _domain(domain)
+        if not name:
+            return json.dumps({"ok": False, "error": "give a bare domain, like example.com"})
+
+        claimant = _addr(gl.message.sender_address.as_hex)
+        url = "https://" + name + PROOF_PATH   # into a local before the block opens
+
+        def look() -> str:
+            try:
+                response = gl.nondet.web.get(url)
+                if int(response.status) >= 400:
+                    return "HTTP_" + str(int(response.status))
+                return response.body.decode("utf-8", "replace").strip().lower()[:200]
+            except Exception:
+                return ""
+
+        published = str(gl.eq_principle.strict_eq(look)).strip().lower()
+        if not published:
+            return json.dumps({"ok": False, "domain": name,
+                               "error": "nothing the validators agreed on at " + PROOF_PATH})
+        if published != claimant:
+            # Exact match, not a substring: a file that merely mentions an
+            # address somewhere in a paragraph is not a domain vouching for it.
+            return json.dumps({"ok": False, "domain": name,
+                               "error": "that file does not name the calling address",
+                               "found": published[:60]})
+
+        self.controllers[name] = json.dumps({
+            "domain": name, "controller": claimant,
+            "proved_at": _now_iso(), "proved_epoch": _now_epoch(),
+        })
+        return json.dumps({"ok": True, "domain": name, "controller": claimant,
+                           "good_for_seconds": PROOF_TTL})
+
+    def _controller(self, name: str) -> typing.Optional[str]:
+        """The address this domain vouches for, if the proof is still fresh."""
+        if name not in self.controllers:
+            return None
+        record = json.loads(self.controllers[name])
+        if _now_epoch() - int(record["proved_epoch"]) > PROOF_TTL:
+            return None
+        return str(record["controller"])
+
     # ------------------------------------------------------------- the promise
 
     @gl.public.write.payable
-    def pledge(self, domain: str, promise: str, term_seconds: str) -> str:
-        """Publish a promise about this domain and leave collateral behind it.
+    def pledge(self, domain: str, promise: str, payout: str, window_seconds: str,
+               term_seconds: str) -> str:
+        """Publish a promise about a domain you have proved you control.
 
-        Payable, and it never raises. A guard that raised here would revert the
-        record and keep the money, which is the worst outcome available.
+        The payout per upheld claim is fixed here, by the party putting up the
+        money, and a claimant can never name its own figure.
         """
         value = gl.message.value
         name = _domain(domain)
         text = str(promise).strip()[:MAX_PROMISE]
         owner = _addr(gl.message.sender_address.as_hex)
 
-        if not name or len(text) < 10 or value <= 0:
-            # Refused by paying it back. A refusal here is a successful
-            # transaction that created nothing.
+        def refuse(why: str) -> str:
             if value > 0:
                 _Recipient(gl.message.sender_address).emit_transfer(value=int(value))
-            return json.dumps({"ok": False, "error":
-                               "need a bare domain, a promise, and collateral behind it"})
+            return json.dumps({"ok": False, "error": why})
 
-        now = _now_epoch()
+        if not name or len(text) < 10 or value <= 0:
+            return refuse("need a bare domain, a promise, and collateral behind it")
+
+        controller = self._controller(name)
+        if controller is None:
+            return refuse("prove control of that domain first: publish your address at "
+                          + PROOF_PATH + " and call verify")
+        if controller != owner:
+            return refuse("that domain vouches for " + controller)
+
+        each = _clamp(payout, 1, int(value), max(1, int(value) // 10))
+        window = _clamp(window_seconds, MIN_WINDOW, MAX_WINDOW, DEFAULT_WINDOW)
+
         if name in self.pledges:
             existing = json.loads(self.pledges[name])
             if existing["owner"] != owner:
-                _Recipient(gl.message.sender_address).emit_transfer(value=int(value))
-                return json.dumps({"ok": False, "error":
-                                   "that domain was pledged by " + existing["owner"]})
+                return refuse("that domain was pledged by " + existing["owner"])
             existing["collateral"] = int(existing["collateral"]) + int(value)
             existing["topped_up_at"] = _now_iso()
             self.pledges[name] = json.dumps(existing)
@@ -195,26 +283,50 @@ class Pledge(gl.Contract):
             "promise": text,
             "owner": owner,
             "collateral": int(value),
+            # The terms, fixed and machine readable rather than left in prose.
+            "payout_each": each,
+            "window_seconds": window,
+            "max_claims_per_window": MAX_CLAIMS_PER_WINDOW,
+            "max_value_per_window": each * MAX_CLAIMS_PER_WINDOW,
             "paid_out": 0,
             "state": OPEN,
             "opened_at": _now_iso(),
-            "expires_at_epoch": now + _term(term_seconds, DEFAULT_TERM),
+            "expires_at_epoch": _now_epoch() + _clamp(term_seconds, MIN_TERM, MAX_TERM,
+                                                      DEFAULT_TERM),
             "claims_upheld": 0,
             "paid_addresses": [],
         }
         self.pledges[name] = json.dumps(record)
         self.domains.append(name)
         return json.dumps({"ok": True, "domain": name, "collateral": str(value),
+                           "payout_each": str(each), "window_seconds": window,
+                           "max_claims_per_window": MAX_CLAIMS_PER_WINDOW,
                            "expires_at_epoch": record["expires_at_epoch"]})
 
     # --------------------------------------------------------------- the claim
 
+    def _spent_in_window(self, name: str, window: int):
+        """What this domain has already paid inside the current window."""
+        since = _now_epoch() - window
+        count = value = 0
+        for raw in self.claims:
+            claim = json.loads(raw)
+            if claim["domain"] != name or not claim.get("upheld"):
+                continue
+            if int(claim.get("at_epoch", 0)) < since:
+                continue
+            paid = int(claim.get("paid", 0))
+            if paid > 0:
+                count += 1
+                value += paid
+        return count, value
+
     @gl.public.write
-    def claim(self, domain: str, bounty: str) -> str:
+    def claim(self, domain: str) -> str:
         """Say you were turned away, and let the network go and check.
 
-        The caller supplies no evidence, because evidence from either side would
-        be worthless. All the caller does is name the domain.
+        The caller supplies no evidence and no figure. All it does is name the
+        domain.
         """
         name = _domain(domain)
         if name not in self.pledges:
@@ -233,12 +345,11 @@ class Pledge(gl.Contract):
         if claimant == record["owner"]:
             return json.dumps({"ok": False, "error": "the owner cannot claim against itself"})
 
-        collateral = int(record["collateral"])
-        if collateral <= 0:
-            return json.dumps({"ok": False, "error": "there is nothing left behind that promise"})
-
-        # Everything the round needs, in locals, before the block opens.
-        url = "https://www." + name + "/"
+        # The domain as pledged, with no www bolted on. The promise is about
+        # this name, and knocking somewhere else would test a host the site
+        # never made a promise about: measured, jspiiv.github.io answered while
+        # www.jspiiv.github.io did not exist at all.
+        url = "https://" + name + "/"
 
         def knock() -> str:
             try:
@@ -260,39 +371,50 @@ class Pledge(gl.Contract):
             return json.dumps({"ok": False, "domain": name,
                                "error": "the round produced no outcome this contract recognises"})
 
-        # The promise is broken only by the specific thing it promised not to
-        # do: open for a silent client and shut for one that says what it is. A
-        # site that is down, or that refuses everybody, has not done that.
         broken = quiet == SERVED and declared == REFUSED
 
         payout = 0
+        capped = None
         if broken:
-            payout = min(collateral, max(1, _amount(bounty, collateral)))
-            record["collateral"] = collateral - payout
-            record["paid_out"] = int(record["paid_out"]) + payout
-            record["claims_upheld"] = int(record["claims_upheld"]) + 1
-            record["paid_addresses"] = record["paid_addresses"] + [claimant]
-            if record["collateral"] <= 0:
-                record["state"] = CLOSED
-            self.pledges[name] = json.dumps(record)
-            _Recipient(gl.message.sender_address).emit_transfer(value=int(payout))
+            window = int(record["window_seconds"])
+            count, spent = self._spent_in_window(name, window)
+            each = int(record["payout_each"])
+            collateral = int(record["collateral"])
+
+            if count >= int(record["max_claims_per_window"]):
+                capped = "the claim cap for this window is already spent"
+            elif spent + each > int(record["max_value_per_window"]):
+                capped = "the value cap for this window is already spent"
+            elif collateral <= 0:
+                capped = "there is nothing left behind that promise"
+            else:
+                payout = min(each, collateral)
+                record["collateral"] = collateral - payout
+                record["paid_out"] = int(record["paid_out"]) + payout
+                record["claims_upheld"] = int(record["claims_upheld"]) + 1
+                record["paid_addresses"] = record["paid_addresses"] + [claimant]
+                if record["collateral"] <= 0:
+                    record["state"] = CLOSED
+                self.pledges[name] = json.dumps(record)
+                _Recipient(gl.message.sender_address).emit_transfer(value=int(payout))
 
         index = len(self.claims)
         self.claims.append(json.dumps({
             "index": index, "domain": name, "claimant": claimant,
             "quiet": quiet, "declared": declared, "upheld": broken,
-            "paid": str(payout), "at": _now_iso(),
+            # A capped claim is still recorded as upheld. The finding is true
+            # whether or not there is budget left to pay for it, and dropping it
+            # would quietly shrink the record of what the site did.
+            "paid": payout, "capped": capped,
+            "at": _now_iso(), "at_epoch": _now_epoch(),
         }))
         return json.dumps({"ok": True, "domain": name, "quiet": quiet, "declared": declared,
-                           "upheld": broken, "paid": str(payout), "claim": index})
+                           "upheld": broken, "paid": str(payout), "capped": capped,
+                           "claim": index})
 
     @gl.public.write
     def close(self, domain: str) -> str:
-        """Take back what is left, once the term is over.
-
-        Only after expiry, and only by the owner. Collateral that could be
-        withdrawn at any moment would not be collateral.
-        """
+        """Take back what is left, once the term is over."""
         name = _domain(domain)
         if name not in self.pledges:
             return json.dumps({"ok": False, "error": "nothing is pledged for that domain"})
@@ -321,6 +443,15 @@ class Pledge(gl.Contract):
         return self.pledges[name]
 
     @gl.public.view
+    def controller(self, domain: str) -> str:
+        name = _domain(domain)
+        who = self._controller(name)
+        if who is None:
+            return json.dumps({"ok": False, "domain": name,
+                               "error": "no fresh proof of control for that domain"})
+        return json.dumps({"ok": True, "domain": name, "controller": who})
+
+    @gl.public.view
     def board(self) -> str:
         out = []
         for name in self.domains:
@@ -339,25 +470,19 @@ class Pledge(gl.Contract):
 
     @gl.public.view
     def size(self) -> str:
-        upheld = 0
+        upheld = paid = capped = 0
         for raw in self.claims:
-            if json.loads(raw)["upheld"]:
-                upheld += 1
+            claim = json.loads(raw)
+            upheld += bool(claim["upheld"])
+            paid += int(claim.get("paid", 0)) > 0
+            capped += bool(claim.get("capped"))
         return json.dumps({
             "pledges": len(self.domains),
             "claims": len(self.claims),
             "claims_upheld": upheld,
+            "claims_paid": paid,
+            "claims_capped": capped,
             "note": ("a claim is settled by the validators knocking on the door themselves, "
-                     "twice, silent and then declaring; neither party supplies evidence"),
+                     "twice, silent and then declaring; neither party supplies evidence, and "
+                     "the payout is fixed by the pledge rather than chosen by the claimant"),
         })
-
-
-def _amount(value, ceiling: int) -> int:
-    """A requested payout, clamped to what is actually there. Never raises."""
-    try:
-        wanted = int(str(value).strip())
-    except Exception:
-        return ceiling
-    if wanted <= 0:
-        return ceiling
-    return min(wanted, ceiling)
