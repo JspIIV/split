@@ -277,3 +277,55 @@ at the domain as pledged, which is the host the promise was actually made about.
 naming somebody else, an address merely mentioned in a sentence, a stale proof,
 six rotating addresses against a window that allows three, and a capped claim
 that is recorded and pays nothing.
+
+## The promise now decides what is measured
+
+The first correction bound a pledge to a proved controller and capped the
+payouts. It missed the third thing asked for, and the miss was the important
+one: **the promise text was prose nobody read.** A site could publish any
+sentence it liked while every claim settled the same fixed condition
+underneath, so the published promise and the thing being enforced had nothing to
+do with each other. A steward rejected it for exactly that, and was right.
+
+A pledge now carries terms the round can act on:
+
+* **which identities it covers**, from a vocabulary the contract can knock as:
+  `chatgpt_user`, `claude_user`, `perplexity_user`, `gptbot`. A claim under an
+  identity the promise does not name is refused before any round opens.
+* **what is promised**, one of two:
+  * `SAME_DOOR` the declared client is let in wherever the silent one is
+  * `SAME_PAGE` the same, and handed a page of comparable size
+
+The prose stays, for a person to read. It is no longer the thing being enforced,
+and the contract says so.
+
+**Why two conditions rather than one.** A site that answers an agent with a stub
+is keeping `SAME_DOOR` and breaking `SAME_PAGE`. Skyscanner does exactly that in
+our own measurement: 200 KB to a browser, 708 bytes to an agent. Which of those a
+site is willing to promise should be the site's to say, not ours to assume.
+
+The size comparison never leaves the round. Validators fetch from different
+places, so an exact byte count would split the jury over a rotating banner; what
+crosses to consensus is the coarse verdict each validator reached under the same
+rule, with a 40 percent tolerance.
+
+Live on GenLayer Studionet at `0x3FFeC768c08e6E149339413CDc188F71e6c8De39`,
+run end to end in `demo_pledge.log`:
+
+```
+pledge nike.com     refused, no proof of control
+no identities       refused, name one from chatgpt_user, claude_user, gptbot, perplexity_user
+unknown condition   refused, either SAME_DOOR or SAME_PAGE
+verify              controller 0x8051...6258, good for 30 days
+pledge              covers [chatgpt_user, claude_user], condition SAME_PAGE
+claim as gptbot     refused, that promise does not cover gptbot
+claim as chatgpt_user  SERVED then SERVED, not upheld, nothing paid
+```
+
+`python contracts/tests/pledge_rules.py` is now 47 checks. Twelve are new: a
+pledge naming no identity, an identity the contract cannot knock as, a missing
+condition, an unknown condition, a claim under an uncovered identity, and the
+pair that matters most, where the same site behaviour is judged against two
+different published promises. A page cut to a fifth breaks `SAME_PAGE` and pays,
+does not break `SAME_DOOR` and pays nothing, and a page a tenth smaller breaks
+neither.

@@ -58,14 +58,18 @@ class _Evm:
 
 
 class _Web:
-    """What the site does, at two different URLs.
+    """What the site does, at two different URLs and to two kinds of client.
 
     The proof file and the homepage answer separately, so a test can give a site
-    an honest door and a missing proof, or the other way round. That pair is
-    exactly what the control checks are about.
+    an honest door and a missing proof, or the other way round.
+
+    Bodies have length here, because one of the two promises a site can make is
+    about the size of the page an agent is handed rather than about whether it
+    is let in at all.
     """
     def __init__(self):
         self.quiet, self.declared = 200, 200
+        self.quiet_bytes, self.declared_bytes = 1000, 1000
         self.proof, self.proof_status = "", 200
 
     def get(self, url, headers=None):
@@ -74,10 +78,12 @@ class _Web:
                 raise RuntimeError("hung up")
             return types.SimpleNamespace(status=self.proof_status,
                                          body=self.proof.encode("utf-8"))
-        status = self.declared if headers and "User-Agent" in headers else self.quiet
+        declared = bool(headers and "User-Agent" in headers)
+        status = self.declared if declared else self.quiet
         if status == 0:
             raise RuntimeError("hung up")
-        return types.SimpleNamespace(status=status, body=b"")
+        size = self.declared_bytes if declared else self.quiet_bytes
+        return types.SimpleNamespace(status=status, body=b"x" * size)
 
 
 class _Write:
@@ -141,7 +147,8 @@ AGENT = "0x2222222222222222222222222222222222222222"
 OTHER = "0x3333333333333333333333333333333333333333"
 
 PROMISE = "Agents acting for a person are served the same pages as a browser."
-TERMS = ("shop.example", PROMISE, "100", "3600", "86400")
+COVERS = "chatgpt_user,claude_user"
+TERMS = ("shop.example", PROMISE, COVERS, "SAME_DOOR", "100", "3600", "86400")
 
 
 def main():
@@ -153,6 +160,12 @@ def main():
 
     def door(quiet, declared):
         gl.nondet.web.quiet, gl.nondet.web.declared = quiet, declared
+        gl.nondet.web.quiet_bytes = gl.nondet.web.declared_bytes = 1000
+
+    def page(quiet_bytes, declared_bytes):
+        gl.nondet.web.quiet = gl.nondet.web.declared = 200
+        gl.nondet.web.quiet_bytes = quiet_bytes
+        gl.nondet.web.declared_bytes = declared_bytes
 
     def proof(text, status=200):
         gl.nondet.web.proof, gl.nondet.web.proof_status = text, status
@@ -198,25 +211,55 @@ def main():
     check("the payout per claim is set at pledge time", opened["payout_each"] == "100")
     check("so is the window and the cap inside it",
           opened["window_seconds"] == 3600 and opened["max_claims_per_window"] == 3)
+    check("and so are the terms the round will actually check",
+          opened["covers"] == ["chatgpt_user", "claude_user"]
+          and opened["condition"] == "SAME_DOOR")
+
+    print("\na promise has to say what it promises")
+    for label, args in [
+        ("no identities named", ("other.example", PROMISE, "", "SAME_DOOR", "100", "3600", "86400")),
+        ("an identity it cannot knock as",
+         ("other.example", PROMISE, "some-other-bot", "SAME_DOOR", "100", "3600", "86400")),
+        ("no condition", ("other.example", PROMISE, COVERS, "", "100", "3600", "86400")),
+        ("a condition it does not know",
+         ("other.example", PROMISE, COVERS, "BE_NICE", "100", "3600", "86400")),
+    ]:
+        gl.evm.transfers.clear()
+        as_(SITE, 400)
+        out = json.loads(c.pledge(*args))
+        check("%-30s refused and refunded" % label,
+              not out["ok"] and gl.evm.transfers == [(SITE, 400)])
+
+    print("\na claim has to be made under an identity the promise covers")
+    gl.evm.transfers.clear()
+    as_(AGENT)
+    door(200, 403)
+    check("an identity the contract does not know is refused",
+          not json.loads(c.claim("shop.example", "some-other-bot"))["ok"])
+    uncovered = json.loads(c.claim("shop.example", "gptbot"))
+    check("a known identity the promise does not cover is refused",
+          not uncovered["ok"] and "does not cover" in uncovered["error"])
+    check("and nothing was paid for it", not gl.evm.transfers)
 
     print("\nthe promise is kept, and the other ways of not paying")
+    gl.evm.transfers.clear()
     as_(AGENT)
     door(200, 200)
-    kept = json.loads(c.claim("shop.example"))
+    kept = json.loads(c.claim("shop.example", "chatgpt_user"))
     check("a claim fails when the door opens for both", kept["ok"] and not kept["upheld"])
     door(503, 503)
     check("a site that is down breaks no promise",
-          not json.loads(c.claim("shop.example"))["upheld"])
+          not json.loads(c.claim("shop.example", "chatgpt_user"))["upheld"])
     door(403, 403)
     check("refusing everybody breaks no promise about agents",
-          not json.loads(c.claim("shop.example"))["upheld"])
+          not json.loads(c.claim("shop.example", "chatgpt_user"))["upheld"])
     door(0, 0)
-    check("an unreachable site pays nobody", not json.loads(c.claim("shop.example"))["upheld"])
+    check("an unreachable site pays nobody", not json.loads(c.claim("shop.example", "chatgpt_user"))["upheld"])
     check("still nobody paid", not gl.evm.transfers)
 
     print("\nthe promised failure, and only it")
     door(200, 403)
-    broken = json.loads(c.claim("shop.example"))
+    broken = json.loads(c.claim("shop.example", "chatgpt_user"))
     check("served silent, refused declared: the claim is upheld", broken["upheld"])
     check("the claimant is paid what the pledge fixed, and cannot name a figure",
           gl.evm.transfers == [(AGENT, 100)] and broken["paid"] == "100")
@@ -228,36 +271,68 @@ def main():
     paid = []
     for n in range(6):
         as_("0x9%039d" % n)
-        out = json.loads(c.claim("shop.example"))
+        out = json.loads(c.claim("shop.example", "chatgpt_user"))
         if int(out["paid"]) > 0:
             paid.append(int(out["paid"]))
     check("only what the window still allowed was paid", paid == [100, 100])
     check("and nothing else left the contract",
           sum(t[1] for t in gl.evm.transfers) == 200)
-    capped = json.loads(c.claim("shop.example"))
+    capped = json.loads(c.claim("shop.example", "chatgpt_user"))
     check("a further claim is still recorded as upheld", capped["upheld"])
     check("but pays nothing and says why",
           capped["paid"] == "0" and "cap" in (capped["capped"] or ""))
     check("the collateral is untouched past the cap",
           json.loads(c.promise("shop.example"))["collateral"] == 700)
 
+    print("\nwhat the promise says is what the round checks")
+    # The same site behaviour, judged against two different published promises.
+    # A page cut to a fifth breaks SAME_PAGE and does not break SAME_DOOR, and
+    # the difference comes from the pledge rather than from the contract.
+    as_(SITE)
+    proof(SITE)
+    json.loads(c.verify("door.example"))
+    json.loads(c.verify("page.example"))
+    as_(SITE, 1000)
+    json.loads(c.pledge("door.example", PROMISE, COVERS, "SAME_DOOR", "100", "3600", "86400"))
+    as_(SITE, 1000)
+    json.loads(c.pledge("page.example", PROMISE, COVERS, "SAME_PAGE", "100", "3600", "86400"))
+
+    page(1000, 200)
+    gl.evm.transfers.clear()
+    as_("0x8888888888888888888888888888888888888888")
+    door_claim = json.loads(c.claim("door.example", "chatgpt_user"))
+    check("a stub page does not break a promise about the door",
+          door_claim["ok"] and not door_claim["upheld"] and not gl.evm.transfers)
+    page_claim = json.loads(c.claim("page.example", "chatgpt_user"))
+    check("the same behaviour breaks a promise about the page",
+          page_claim["upheld"] and page_claim["paid"] == "100")
+    check("and only that one paid", gl.evm.transfers == [("0x8888888888888888888888888888888888888888", 100)])
+
+    page(1000, 900)
+    gl.evm.transfers.clear()
+    as_("0x7777777777777777777777777777777777777777")
+    slight = json.loads(c.claim("page.example", "chatgpt_user"))
+    check("a page a tenth smaller is not a broken promise",
+          slight["ok"] and not slight["upheld"] and not gl.evm.transfers)
+
     print("\nan address is paid once per domain however often it claims")
     gl.evm.transfers.clear()
     as_(AGENT)
-    again = json.loads(c.claim("shop.example"))
+    again = json.loads(c.claim("shop.example", "chatgpt_user"))
     check("a second claim from a paid address is refused", not again["ok"])
     check("and pays nothing", not gl.evm.transfers)
 
     print("\nthe owner cannot claim against itself, or cash out early")
     as_(SITE)
-    check("the owner is refused", not json.loads(c.claim("shop.example"))["ok"])
+    check("the owner is refused", not json.loads(c.claim("shop.example", "chatgpt_user"))["ok"])
     check("closing before the term ends is refused",
           not json.loads(c.close("shop.example"))["ok"])
 
     print("\na deposit that cannot be accepted is paid back, never kept")
     gl.evm.transfers.clear()
     as_(OTHER, 500)
-    refused = json.loads(c.pledge("not a domain", PROMISE, "100", "3600", "86400"))
+    refused = json.loads(c.pledge("not a domain", PROMISE, COVERS, "SAME_DOOR",
+                                  "100", "3600", "86400"))
     check("a malformed domain is refused", not refused["ok"])
     check("and the money goes straight back", gl.evm.transfers == [(OTHER, 500)])
 

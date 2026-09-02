@@ -103,8 +103,39 @@ MAX_CLAIMS_PER_WINDOW = 3
 # Where the domain vouches for an address.
 PROOF_PATH = "/.well-known/split-pledge.txt"
 
-DECLARED_AGENT = ("Mozilla/5.0 AppleWebKit/537.36 (KHTML, like Gecko); compatible; "
-                  "ChatGPT-User/1.0; +https://openai.com/bot")
+# The identities a promise can be made about. A pledge names which of these it
+# covers, and a claim has to be made under one of the named ones. Free prose was
+# not enough: the first version let a site publish any sentence it liked while
+# every claim settled the same fixed condition underneath, so the published
+# promise and the thing being enforced had nothing to do with each other.
+IDENTITIES = {
+    "chatgpt_user": ("Mozilla/5.0 AppleWebKit/537.36 (KHTML, like Gecko); compatible; "
+                     "ChatGPT-User/1.0; +https://openai.com/bot"),
+    "claude_user": ("Mozilla/5.0 AppleWebKit/537.36 (KHTML, like Gecko); compatible; "
+                    "Claude-User/1.0; +https://anthropic.com/claude-user"),
+    "perplexity_user": ("Mozilla/5.0 AppleWebKit/537.36 (KHTML, like Gecko); compatible; "
+                        "Perplexity-User/1.0; +https://perplexity.ai/perplexity-user"),
+    "gptbot": ("Mozilla/5.0 AppleWebKit/537.36 (compatible; GPTBot/1.1; "
+               "+https://openai.com/gptbot)"),
+}
+
+# What a promise can promise. Both are checked by the validators in the round,
+# and which one is checked comes from the pledge rather than from the contract.
+#
+#   SAME_DOOR  the declared client is let in wherever the silent one is
+#   SAME_PAGE  the same, and it is handed a page of comparable size
+#
+# SAME_PAGE is the stronger promise: a site that answers an agent with a stub is
+# keeping SAME_DOOR and breaking SAME_PAGE, and that is a distinction a site
+# should be able to make about itself rather than have made for it.
+SAME_DOOR = "SAME_DOOR"
+SAME_PAGE = "SAME_PAGE"
+CONDITIONS = [SAME_DOOR, SAME_PAGE]
+
+# How much smaller a declared client's page may be before SAME_PAGE is broken.
+# Coarse on purpose: validators fetch from different places and a tight
+# threshold would split the jury over a rotating banner rather than over policy.
+PAGE_TOLERANCE = 40
 
 
 @gl.evm.contract_interface
@@ -154,6 +185,25 @@ def _clamp(value, low: int, high: int, fallback: int) -> int:
     except Exception:
         return fallback
     return max(low, min(high, number))
+
+
+def _identities(value: str):
+    """The identities a pledge covers, in the contract's own vocabulary.
+
+    Unknown names are dropped rather than stored, so a pledge cannot promise
+    something about a client the contract has no way to knock as.
+    """
+    named = []
+    for part in str(value).replace(";", ",").split(","):
+        name = part.strip().lower()
+        if name in IDENTITIES and name not in named:
+            named.append(name)
+    return named
+
+
+def _condition(value: str) -> str:
+    name = str(value).strip().upper()
+    return name if name in CONDITIONS else ""
 
 
 def _outcome(status: int) -> str:
@@ -238,8 +288,8 @@ class Pledge(gl.Contract):
     # ------------------------------------------------------------- the promise
 
     @gl.public.write.payable
-    def pledge(self, domain: str, promise: str, payout: str, window_seconds: str,
-               term_seconds: str) -> str:
+    def pledge(self, domain: str, promise: str, identities: str, condition: str,
+               payout: str, window_seconds: str, term_seconds: str) -> str:
         """Publish a promise about a domain you have proved you control.
 
         The payout per upheld claim is fixed here, by the party putting up the
@@ -255,8 +305,16 @@ class Pledge(gl.Contract):
                 _Recipient(gl.message.sender_address).emit_transfer(value=int(value))
             return json.dumps({"ok": False, "error": why})
 
+        covered = _identities(identities)
+        rule = _condition(condition)
+
         if not name or len(text) < 10 or value <= 0:
             return refuse("need a bare domain, a promise, and collateral behind it")
+        if not covered:
+            return refuse("name at least one identity this promise covers, from: "
+                          + ", ".join(sorted(IDENTITIES)))
+        if not rule:
+            return refuse("say what is promised, either " + " or ".join(CONDITIONS))
 
         controller = self._controller(name)
         if controller is None:
@@ -280,7 +338,12 @@ class Pledge(gl.Contract):
 
         record = {
             "domain": name,
+            # The prose is for a person to read. The two fields under it are what
+            # the round actually checks, and a claim is settled against them
+            # rather than against a sentence nobody can enforce.
             "promise": text,
+            "covers": covered,
+            "condition": rule,
             "owner": owner,
             "collateral": int(value),
             # The terms, fixed and machine readable rather than left in prose.
@@ -299,6 +362,7 @@ class Pledge(gl.Contract):
         self.pledges[name] = json.dumps(record)
         self.domains.append(name)
         return json.dumps({"ok": True, "domain": name, "collateral": str(value),
+                           "covers": covered, "condition": rule,
                            "payout_each": str(each), "window_seconds": window,
                            "max_claims_per_window": MAX_CLAIMS_PER_WINDOW,
                            "expires_at_epoch": record["expires_at_epoch"]})
@@ -322,11 +386,12 @@ class Pledge(gl.Contract):
         return count, value
 
     @gl.public.write
-    def claim(self, domain: str) -> str:
+    def claim(self, domain: str, identity: str) -> str:
         """Say you were turned away, and let the network go and check.
 
-        The caller supplies no evidence and no figure. All it does is name the
-        domain.
+        The caller supplies no evidence and no figure. It names the domain and
+        the identity it was refused under, and that identity has to be one the
+        pledge actually covers.
         """
         name = _domain(domain)
         if name not in self.pledges:
@@ -345,33 +410,70 @@ class Pledge(gl.Contract):
         if claimant == record["owner"]:
             return json.dumps({"ok": False, "error": "the owner cannot claim against itself"})
 
+        wanted = str(identity).strip().lower()
+        covered = record.get("covers") or []
+        if wanted not in IDENTITIES:
+            return json.dumps({"ok": False, "error": "unknown identity: " + str(wanted)[:40]})
+        if wanted not in covered:
+            return json.dumps({"ok": False, "domain": name,
+                               "error": "that promise does not cover " + wanted,
+                               "covers": covered})
+
         # The domain as pledged, with no www bolted on. The promise is about
         # this name, and knocking somewhere else would test a host the site
         # never made a promise about: measured, jspiiv.github.io answered while
         # www.jspiiv.github.io did not exist at all.
         url = "https://" + name + "/"
 
+        # Copied into locals before the block opens, because the terms live in
+        # storage and nothing inside the block may read it.
+        agent_ua = IDENTITIES[wanted]
+        rule = str(record.get("condition") or SAME_DOOR)
+
         def knock() -> str:
+            """Two knocks, and the verdict the pledged condition asks for.
+
+            The sizes never leave this block. Validators fetch from different
+            places, so an exact byte count would split the jury over a rotating
+            banner. What crosses to consensus is the coarse reading each of them
+            arrived at under the same rule.
+            """
             try:
-                quiet = _outcome(int(gl.nondet.web.get(url).status))
+                first = gl.nondet.web.get(url)
+                quiet = _outcome(int(first.status))
+                quiet_size = len(first.body)
             except Exception:
-                quiet = UNREACHABLE
+                quiet, quiet_size = UNREACHABLE, 0
             try:
-                declared = _outcome(int(gl.nondet.web.get(url, headers={
-                    "User-Agent": DECLARED_AGENT,
+                second = gl.nondet.web.get(url, headers={
+                    "User-Agent": agent_ua,
                     "Accept": "text/html,application/xhtml+xml",
-                }).status))
+                })
+                declared = _outcome(int(second.status))
+                declared_size = len(second.body)
             except Exception:
-                declared = UNREACHABLE
-            return quiet + "|" + declared
+                declared, declared_size = UNREACHABLE, 0
+
+            broken = "NO"
+            if quiet == SERVED and declared == REFUSED:
+                broken = "YES"
+            elif rule == SAME_PAGE and quiet == SERVED and declared == SERVED and quiet_size:
+                shrunk = (quiet_size - declared_size) * 100 // quiet_size
+                if shrunk > PAGE_TOLERANCE:
+                    broken = "YES"
+            return quiet + "|" + declared + "|" + broken
 
         agreed = str(gl.eq_principle.strict_eq(knock)).strip().upper()
-        quiet, _, declared = agreed.partition("|")
-        if quiet not in OUTCOMES or declared not in OUTCOMES:
+        parts = agreed.split("|")
+        if len(parts) != 3 or parts[0] not in OUTCOMES or parts[1] not in OUTCOMES:
             return json.dumps({"ok": False, "domain": name,
                                "error": "the round produced no outcome this contract recognises"})
+        if parts[2] not in ("YES", "NO"):
+            return json.dumps({"ok": False, "domain": name,
+                               "error": "the round produced no verdict this contract recognises"})
 
-        broken = quiet == SERVED and declared == REFUSED
+        quiet, declared, verdict = parts[0], parts[1], parts[2]
+        broken = verdict == "YES"
 
         payout = 0
         capped = None
@@ -401,6 +503,7 @@ class Pledge(gl.Contract):
         index = len(self.claims)
         self.claims.append(json.dumps({
             "index": index, "domain": name, "claimant": claimant,
+            "identity": wanted, "condition": rule,
             "quiet": quiet, "declared": declared, "upheld": broken,
             # A capped claim is still recorded as upheld. The finding is true
             # whether or not there is budget left to pay for it, and dropping it
@@ -408,7 +511,8 @@ class Pledge(gl.Contract):
             "paid": payout, "capped": capped,
             "at": _now_iso(), "at_epoch": _now_epoch(),
         }))
-        return json.dumps({"ok": True, "domain": name, "quiet": quiet, "declared": declared,
+        return json.dumps({"ok": True, "domain": name, "identity": wanted,
+                           "condition": rule, "quiet": quiet, "declared": declared,
                            "upheld": broken, "paid": str(payout), "capped": capped,
                            "claim": index})
 

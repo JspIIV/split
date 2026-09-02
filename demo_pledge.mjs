@@ -1,10 +1,12 @@
 // A promise about agent access, made only by the party that can prove the
-// domain is its own, and a claim that the validators settle by knocking.
+// domain is its own, and settled against the terms that promise actually
+// published.
 //
-// Three things are shown, and the first two are the corrections a steward asked
-// for: a domain nobody has proved cannot be pledged at all, a proved domain can,
-// and the payout is fixed by the pledge rather than named by the claimant.
-import { Wallet } from 'file:///C:/Users/ysfym/AppData/Roaming/npm/node_modules/genlayer/node_modules/ethers/lib.esm/index.js';
+// Four things are shown, and the last one is the correction a steward asked for:
+// a domain nobody has proved cannot be pledged, a proved domain can, a claim
+// under an identity the promise does not cover is refused, and the claim that is
+// covered settles under the condition the pledge named rather than a fixed one.
+import { Wallet } from '../courtscan/node_modules/ethers/lib.esm/index.js';
 import { createClient, createAccount } from '../placard-app/node_modules/genlayer-js/dist/index.js';
 import { studionet } from '../placard-app/node_modules/genlayer-js/dist/chains/index.js';
 import fs from 'fs';
@@ -29,20 +31,32 @@ async function send(client, fn, args, value = 0n) {
 }
 
 const PROMISE = 'Agents fetching a page for a person are served exactly what a browser is served.';
+const COVERS = 'chatgpt_user,claude_user';
+const CONDITION = 'SAME_PAGE';
 const COLLATERAL = 10n ** 16n;      // 0.01 GEN behind the promise
 const PAYOUT = '2000000000000000';  // 0.002 GEN per upheld claim, fixed here
 const WINDOW = '3600';
 const TERM = '86400';
 
 console.log('a domain nobody has proved control of');
-console.log('  pledge nike.com   ',
-  JSON.stringify(await send(site, 'pledge', ['nike.com', PROMISE, PAYOUT, WINDOW, TERM], COLLATERAL)));
+console.log('  pledge nike.com   ', JSON.stringify(await send(site, 'pledge',
+  ['nike.com', PROMISE, COVERS, CONDITION, PAYOUT, WINDOW, TERM], COLLATERAL)));
+
+console.log('\na promise that does not say what it promises');
+console.log('  no identities     ', JSON.stringify(await send(site, 'pledge',
+  ['jspiiv.github.io', PROMISE, '', CONDITION, PAYOUT, WINDOW, TERM], COLLATERAL)));
+console.log('  unknown condition ', JSON.stringify(await send(site, 'pledge',
+  ['jspiiv.github.io', PROMISE, COVERS, 'BE_NICE', PAYOUT, WINDOW, TERM], COLLATERAL)));
 
 console.log('\nthe domain this account can actually prove');
 console.log('  verify            ', JSON.stringify(await send(site, 'verify', ['jspiiv.github.io'])));
-console.log('  pledge            ',
-  JSON.stringify(await send(site, 'pledge', ['jspiiv.github.io', PROMISE, PAYOUT, WINDOW, TERM], COLLATERAL)));
-console.log('  claim, by somebody else',
-  JSON.stringify(await send(agent, 'claim', ['jspiiv.github.io'])));
+console.log('  pledge            ', JSON.stringify(await send(site, 'pledge',
+  ['jspiiv.github.io', PROMISE, COVERS, CONDITION, PAYOUT, WINDOW, TERM], COLLATERAL)));
+
+console.log('\nclaims are settled against the published terms');
+console.log('  under gptbot, not covered',
+  JSON.stringify(await send(agent, 'claim', ['jspiiv.github.io', 'gptbot'])));
+console.log('  under chatgpt_user, covered',
+  JSON.stringify(await send(agent, 'claim', ['jspiiv.github.io', 'chatgpt_user'])));
 
 console.log('\nsize', JSON.stringify(await site.readContract({ address: ADDR, functionName: 'size', args: [] })));

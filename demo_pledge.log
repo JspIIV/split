@@ -1,9 +1,16 @@
 a domain nobody has proved control of
   pledge nike.com    {"ok":false,"error":"prove control of that domain first: publish your address at /.well-known/split-pledge.txt and call verify"}
 
+a promise that does not say what it promises
+  no identities      {"ok":false,"error":"name at least one identity this promise covers, from: chatgpt_user, claude_user, gptbot, perplexity_user"}
+  unknown condition  {"ok":false,"error":"say what is promised, either SAME_DOOR or SAME_PAGE"}
+
 the domain this account can actually prove
   verify             {"ok":true,"domain":"jspiiv.github.io","controller":"0x80519c53f10d731e4ff83a7d9acd69cf98da6258","good_for_seconds":2592000}
-  pledge             {"ok":true,"domain":"jspiiv.github.io","collateral":"10000000000000000","payout_each":"2000000000000000","window_seconds":3600,"max_claims_per_window":3,"expires_at_epoch":1788352942}
-  claim, by somebody else {"ok":true,"domain":"jspiiv.github.io","quiet":"SERVED","declared":"SERVED","upheld":false,"paid":"0","capped":null,"claim":0}
+  pledge             {"ok":true,"domain":"jspiiv.github.io","collateral":"10000000000000000","covers":["chatgpt_user","claude_user"],"condition":"SAME_PAGE","payout_each":"2000000000000000","window_seconds":3600,"max_claims_per_window":3,"expires_at_epoch":1788436041}
+
+claims are settled against the published terms
+  under gptbot, not covered {"ok":false,"domain":"jspiiv.github.io","error":"that promise does not cover gptbot","covers":["chatgpt_user","claude_user"]}
+  under chatgpt_user, covered {"ok":true,"domain":"jspiiv.github.io","identity":"chatgpt_user","condition":"SAME_PAGE","quiet":"SERVED","declared":"SERVED","upheld":false,"paid":"0","capped":null,"claim":0}
 
 size "{\"pledges\": 1, \"claims\": 1, \"claims_upheld\": 0, \"claims_paid\": 0, \"claims_capped\": 0, \"note\": \"a claim is settled by the validators knocking on the door themselves, twice, silent and then declaring; neither party supplies evidence, and the payout is fixed by the pledge rather than chosen by the claimant\"}"
