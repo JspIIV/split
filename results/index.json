@@ -1,6 +1,20 @@
 {
   "runs": [
     {
+      "file": "2026-09-09-github.json",
+      "measured_at": "2026-09-09T11:29:50.803850+00:00",
+      "vantage": "github",
+      "totals": {
+        "sites": 230,
+        "comparable": 113,
+        "refuses_agents": 25,
+        "serves_agents_differently": 15,
+        "robots_bars_named_agents": 13,
+        "refuses_without_notice": 24,
+        "said_no_but_serves": 3
+      }
+    },
+    {
       "file": "2026-09-08-github.json",
       "measured_at": "2026-09-08T11:25:01.712253+00:00",
       "vantage": "github",
